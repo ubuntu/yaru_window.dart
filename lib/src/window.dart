@@ -24,6 +24,10 @@ class YaruWindow {
     return YaruWindow.of(context).drag();
   }
 
+  static Future<void> fullscreen(BuildContext context) {
+    return YaruWindow.of(context).fullscreen();
+  }
+
   static Future<void> maximize(BuildContext context) {
     return YaruWindow.of(context).maximize();
   }
@@ -38,6 +42,10 @@ class YaruWindow {
 
   static Future<void> showMenu(BuildContext context) {
     return YaruWindow.of(context).showMenu();
+  }
+
+  static Future<void> unfullscreen(BuildContext context) {
+    return YaruWindow.of(context).unfullscreen();
   }
 
   static Future<void> setBackground(BuildContext context, Color color) {
@@ -91,10 +99,12 @@ class YaruWindowInstance {
 
   Future<void> close() => _platform.close(_id);
   Future<void> drag() => _platform.drag(_id);
+  Future<void> fullscreen() => _platform.fullscreen(_id);
   Future<void> maximize() => _platform.maximize(_id);
   Future<void> minimize() => _platform.minimize(_id);
   Future<void> restore() => _platform.restore(_id);
   Future<void> showMenu() => _platform.showMenu(_id);
+  Future<void> unfullscreen() => _platform.unfullscreen(_id);
 
   Future<void> setBackground(Color color) =>
       _platform.setBackground(_id, color);

@@ -24,6 +24,8 @@ class YaruWindowManager extends YaruWindowPlatform {
   @override
   Future<void> drag(int id) => wm.startDragging().catchError((_) {});
   @override
+  Future<void> fullscreen(int id) => wm.setFullScreen(true).catchError((_) {});
+  @override
   Future<void> maximize(int id) => wm.maximize().catchError((_) {});
   @override
   Future<void> minimize(int id) => wm.minimize().catchError((_) {});
@@ -31,6 +33,9 @@ class YaruWindowManager extends YaruWindowPlatform {
   Future<void> restore(int id) => wm.unmaximize().catchError((_) {});
   @override
   Future<void> showMenu(int id) => wm.popUpWindowMenu().catchError((_) {});
+  @override
+  Future<void> unfullscreen(int id) =>
+      wm.setFullScreen(false).catchError((_) {});
 
   @override
   Future<void> setBackground(int id, Color color) => wm

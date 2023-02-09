@@ -96,15 +96,15 @@ class StateView extends StatelessWidget {
                 child: const Text('Close'),
               ),
             ),
-            // ListTile(
-            //   title: const Text('Fullscreen'),
-            //   subtitle: Text('${state?.isFullscreen}'),
-            //   trailing: ElevatedButton(
-            //     onPressed:
-            //         state?.isFullscreen != true ? window.fullscreen : null,
-            //     child: const Text('Fullscreen'),
-            //   ),
-            // ),
+            ListTile(
+              title: const Text('Fullscreen'),
+              subtitle: Text('${state?.isFullscreen}'),
+              trailing: ElevatedButton(
+                onPressed:
+                    state?.isFullscreen != true ? window.fullscreen : null,
+                child: const Text('Fullscreen'),
+              ),
+            ),
             ListTile(
               title: Text(
                   'Maximizable ${state?.isMaximized == true ? '(maximized)' : ''}'),

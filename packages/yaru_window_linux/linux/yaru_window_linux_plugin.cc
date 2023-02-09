@@ -129,6 +129,8 @@ static void yaru_window_linux_plugin_handle_method_call(
     gtk_widget_show(GTK_WIDGET(window));
   } else if (strcmp(method, "showMenu") == 0) {
     yaru_window_show_menu(window);
+  } else if (strcmp(method, "unfullscreen") == 0) {
+    gtk_window_unfullscreen(window);
   } else if (strcmp(method, "state") == 0) {
     g_autoptr(FlValue) state = yaru_window_get_state(window);
     response = FL_METHOD_RESPONSE(fl_method_success_response_new(state));
