@@ -30,7 +30,6 @@ abstract class YaruWindowPlatform extends PlatformInterface {
   Future<void> restore(int id) => throw UnimplementedError('restore');
   Future<void> show(int id) => throw UnimplementedError('show');
   Future<void> showMenu(int id) => throw UnimplementedError('showMenu');
-  Future<void> unfullscreen(int id) => throw UnimplementedError('unfullscreen');
 
   Future<void> setBackground(int id, Color color) =>
       throw UnimplementedError('setBackground');

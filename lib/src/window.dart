@@ -44,10 +44,6 @@ class YaruWindow {
     return YaruWindow.of(context).showMenu();
   }
 
-  static Future<void> unfullscreen(BuildContext context) {
-    return YaruWindow.of(context).unfullscreen();
-  }
-
   static Future<void> setBackground(BuildContext context, Color color) {
     return YaruWindow.of(context).setBackground(color);
   }
@@ -100,7 +96,6 @@ class YaruWindowInstance {
   Future<void> minimize() => _platform.minimize(_id);
   Future<void> restore() => _platform.restore(_id);
   Future<void> showMenu() => _platform.showMenu(_id);
-  Future<void> unfullscreen() => _platform.unfullscreen(_id);
 
   Future<void> setBackground(Color color) =>
       _platform.setBackground(_id, color);

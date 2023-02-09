@@ -30,12 +30,18 @@ class YaruWindowManager extends YaruWindowPlatform {
   @override
   Future<void> minimize(int id) => wm.minimize().catchError((_) {});
   @override
-  Future<void> restore(int id) => wm.unmaximize().catchError((_) {});
+  Future<void> restore(int id) async {
+    if (await wm.isFullScreen()) {
+      return wm.setFullScreen(false).catchError((_) {});
+    } else if (await wm.isMaximized()) {
+      return wm.unmaximize().catchError((_) {});
+    } else if (await wm.isMinimized()) {
+      return wm.restore().catchError((_) {});
+    }
+  }
+
   @override
   Future<void> showMenu(int id) => wm.popUpWindowMenu().catchError((_) {});
-  @override
-  Future<void> unfullscreen(int id) =>
-      wm.setFullScreen(false).catchError((_) {});
 
   @override
   Future<void> setBackground(int id, Color color) => wm
