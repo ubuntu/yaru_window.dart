@@ -33,16 +33,26 @@ class YaruWindowMethodChannel extends YaruWindowPlatform {
   Future<void> show(int id) => _invokeMethod('show', [id]);
   @override
   Future<void> showMenu(int id) => _invokeMethod('showMenu', [id]);
+
+  @override
+  Future<void> setTitle(int id, String title) =>
+      _invokeMethod('setTitle', [id, title]);
+  @override
+  Future<void> setMinimizable(int id, bool minimizable) =>
+      _invokeMethod('setMinimizable', [id, minimizable]);
+  @override
+  Future<void> setMaximizable(int id, bool maximizable) =>
+      _invokeMethod('setMaximizable', [id, maximizable]);
+  @override
+  Future<void> setClosable(int id, bool closable) =>
+      _invokeMethod('setClosable', [id, closable]);
+
   @override
   Future<YaruWindowState> state(int id) =>
       _invokeMapMethod('state', [id]).then(YaruWindowState.fromJson);
   @override
   Stream<YaruWindowState> states(int id) =>
       _receiveEvents(id, 'state').map(YaruWindowState.fromJson);
-  @override
-  Future<void> setState(int id, YaruWindowState state) {
-    return _invokeMethod('state', [id, state]);
-  }
 
   Future<T?> _invokeMethod<T>(String method, [dynamic args]) {
     return channel.invokeMethod<T>(method, args);
