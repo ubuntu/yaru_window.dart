@@ -113,5 +113,8 @@ class YaruWindowInstance {
       _platform.setClosable(_id, closable);
 
   Future<YaruWindowState> state() => _platform.state(_id);
-  Stream<YaruWindowState> states() => _platform.states(_id);
+  Stream<YaruWindowState> states() async* {
+    yield await _platform.state(_id);
+    yield* _platform.states(_id);
+  }
 }

@@ -127,27 +127,19 @@ class _YaruWindowListener implements WindowListener {
 
   final WindowManager _wm;
   StreamController<YaruWindowState>? _controller;
-  YaruWindowState? _state;
-
-  YaruWindowState? get state => _state;
 
   Stream<YaruWindowState> states() async* {
     _controller ??= StreamController<YaruWindowState>.broadcast(
       onListen: () => _wm.addListener(this),
       onCancel: () => _wm.removeListener(this),
     );
-    if (_state == null) {
-      _state = await _wm.state();
-      yield _state!;
-    }
     yield* _controller!.stream;
   }
 
   Future<void> close() async => await _controller?.close();
 
   Future<void> _updateState() async {
-    _state = await _wm.state();
-    _controller?.add(_state!);
+    _controller?.add(await _wm.state());
   }
 
   @override
