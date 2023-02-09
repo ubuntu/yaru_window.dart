@@ -12,12 +12,22 @@ dependencies:
     sdk: flutter
   yaru_window_linux:
     path: packages/yaru_window_linux ### TODO
-  yaru_window_platform_interface:
-    path: packages/yaru_window_platform_interface ### TODO
   yaru_window_manager:
     path: packages/yaru_window_manager ### TODO
+  yaru_window_platform_interface:
+    path: packages/yaru_window_platform_interface ### TODO
 
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      linux:
+        default_package: yaru_window_linux
+      macos:
+        default_package: yaru_window_manager
+      windows:
+        default_package: yaru_window_manager
