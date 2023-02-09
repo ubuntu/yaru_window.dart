@@ -31,7 +31,7 @@ static void my_application_activate(GApplication* application) {
   hdy_header_bar_set_show_close_button(header_bar, TRUE);
   gtk_box_pack_start(GTK_BOX(box), GTK_WIDGET(header_bar), false, true, 0);
 
-  gtk_window_set_default_size(window, 1280, 720);
+  gtk_window_set_default_size(window, 960, 680);
 
   g_autoptr(FlDartProject) project = fl_dart_project_new();
   fl_dart_project_set_dart_entrypoint_arguments(
