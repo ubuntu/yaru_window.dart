@@ -17,6 +17,7 @@ dev_dependencies:
 
 flutter:
   plugin:
+    implements: yaru_window
     platforms:
       linux:
         pluginClass: YaruWindowLinuxPlugin
