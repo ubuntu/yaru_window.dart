@@ -98,6 +98,20 @@ static void yaru_window_linux_plugin_listen_window(YaruWindowLinuxPlugin* self,
   }
 }
 
+static void yaru_window_linux_plugin_unlisten_window(
+    YaruWindowLinuxPlugin* self, gint window_id) {
+  GtkWindow* window = yaru_window_linux_plugin_get_window(self, window_id);
+  if (g_hash_table_contains(self->signals, GINT_TO_POINTER(window_id))) {
+    g_signal_handlers_disconnect_by_func(window, gpointer(window_state_cb),
+                                         self->event_channel);
+    g_signal_handlers_disconnect_by_func(window, gpointer(window_property_cb),
+                                         self->event_channel);
+    g_signal_handlers_disconnect_by_func(
+        window, gpointer(window_delete_event_cb), self->method_channel);
+    g_hash_table_remove(self->signals, GINT_TO_POINTER(window_id));
+  }
+}
+
 static void yaru_window_linux_plugin_handle_method_call(
     YaruWindowLinuxPlugin* self, FlMethodCall* method_call) {
   g_autoptr(FlMethodResponse) response = nullptr;
@@ -186,6 +200,22 @@ static void method_call_cb(FlMethodChannel* channel, FlMethodCall* method_call,
   yaru_window_linux_plugin_handle_method_call(plugin, method_call);
 }
 
+static FlMethodErrorResponse* listen_state_cb(FlEventChannel* channel,
+                                              FlValue* args,
+                                              gpointer user_data) {
+  YaruWindowLinuxPlugin* plugin = YARU_WINDOW_LINUX_PLUGIN(user_data);
+  yaru_window_linux_plugin_listen_window(plugin, 0);
+  return nullptr;
+}
+
+static FlMethodErrorResponse* cancel_state_cb(FlEventChannel* channel,
+                                              FlValue* args,
+                                              gpointer user_data) {
+  YaruWindowLinuxPlugin* plugin = YARU_WINDOW_LINUX_PLUGIN(user_data);
+  yaru_window_linux_plugin_unlisten_window(plugin, 0);
+  return nullptr;
+}
+
 void yaru_window_linux_plugin_register_with_registrar(
     FlPluginRegistrar* registrar) {
   g_autoptr(YaruWindowLinuxPlugin) plugin = YARU_WINDOW_LINUX_PLUGIN(
@@ -203,8 +233,7 @@ void yaru_window_linux_plugin_register_with_registrar(
 
   plugin->event_channel = fl_event_channel_new(messenger, "yaru_window/events",
                                                FL_METHOD_CODEC(codec));
-  fl_event_channel_set_stream_handlers(plugin->event_channel, nullptr, nullptr,
-                                       g_object_ref(plugin), g_object_unref);
-
-  yaru_window_linux_plugin_listen_window(plugin, 0);
+  fl_event_channel_set_stream_handlers(plugin->event_channel, listen_state_cb,
+                                       cancel_state_cb, g_object_ref(plugin),
+                                       g_object_unref);
 }
