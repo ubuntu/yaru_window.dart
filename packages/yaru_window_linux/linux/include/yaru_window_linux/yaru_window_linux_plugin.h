@@ -11,12 +11,8 @@ G_BEGIN_DECLS
 #define FLUTTER_PLUGIN_EXPORT
 #endif
 
-typedef struct _YaruWindowLinuxPlugin YaruWindowLinuxPlugin;
-typedef struct {
-  GObjectClass parent_class;
-} YaruWindowLinuxPluginClass;
-
-FLUTTER_PLUGIN_EXPORT GType yaru_window_linux_plugin_get_type();
+G_DECLARE_FINAL_TYPE(YaruWindowLinuxPlugin, yaru_window_linux_plugin, YARU,
+                     WINDOW_LINUX_PLUGIN, GObject)
 
 FLUTTER_PLUGIN_EXPORT void yaru_window_linux_plugin_register_with_registrar(
     FlPluginRegistrar* registrar);
