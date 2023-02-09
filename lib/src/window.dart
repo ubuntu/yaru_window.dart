@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:yaru_window_platform_interface/yaru_window_platform_interface.dart';
 
 class YaruWindow {
   static final Map<Object, _YaruWindowInstance> _windows = {};
@@ -54,8 +55,8 @@ class YaruWindow {
     return YaruWindow.of(context).setClosable(closable);
   }
 
-  static YaruWindowState? state(BuildContext context) {
-    return YaruWindow.of(context).state;
+  static Future<YaruWindowState> state(BuildContext context) {
+    return YaruWindow.of(context).state();
   }
 
   static Stream<YaruWindowState> states(BuildContext context) {
@@ -108,7 +109,7 @@ class _YaruWindowInstance {
       .catchError((_) {})
       .then((_) => _listener._updateState());
 
-  YaruWindowState? get state => _listener.state;
+  Future<YaruWindowState> state() => wm.state();
   Stream<YaruWindowState> states() => _listener.states();
 }
 
@@ -218,109 +219,4 @@ class _YaruWindowListener implements WindowListener {
   void onWindowMoved() {}
   @override
   void onWindowEvent(String eventName) {}
-}
-
-@immutable
-class YaruWindowState {
-  const YaruWindowState({
-    this.isActive,
-    this.isClosable,
-    this.isFullscreen,
-    this.isMaximizable,
-    this.isMaximized,
-    this.isMinimizable,
-    this.isMinimized,
-    this.isMovable,
-    this.isRestorable,
-    this.title,
-  });
-
-  final bool? isActive;
-  final bool? isClosable;
-  final bool? isFullscreen;
-  final bool? isMaximizable;
-  final bool? isMaximized;
-  final bool? isMinimizable;
-  final bool? isMinimized;
-  final bool? isMovable;
-  final bool? isRestorable;
-  final String? title;
-
-  YaruWindowState copyWith({
-    bool? isActive,
-    bool? isClosable,
-    bool? isFullscreen,
-    bool? isMaximizable,
-    bool? isMaximized,
-    bool? isMinimizable,
-    bool? isMinimized,
-    bool? isMovable,
-    bool? isRestorable,
-    String? title,
-  }) {
-    return YaruWindowState(
-      isActive: isActive ?? this.isActive,
-      isClosable: isClosable ?? this.isClosable,
-      isFullscreen: isFullscreen ?? this.isFullscreen,
-      isMaximizable: isMaximizable ?? this.isMaximizable,
-      isMaximized: isMaximized ?? this.isMaximized,
-      isMinimizable: isMinimizable ?? this.isMinimizable,
-      isMinimized: isMinimized ?? this.isMinimized,
-      isMovable: isMovable ?? this.isMovable,
-      isRestorable: isRestorable ?? this.isRestorable,
-      title: title ?? this.title,
-    );
-  }
-
-  YaruWindowState merge(YaruWindowState? other) {
-    return copyWith(
-      isActive: other?.isActive,
-      isClosable: other?.isClosable,
-      isFullscreen: other?.isFullscreen,
-      isMaximizable: other?.isMaximizable,
-      isMaximized: other?.isMaximized,
-      isMinimizable: other?.isMinimizable,
-      isMinimized: other?.isMinimized,
-      isMovable: other?.isMovable,
-      isRestorable: other?.isRestorable,
-      title: other?.title,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is YaruWindowState &&
-        other.isActive == isActive &&
-        other.isClosable == isClosable &&
-        other.isFullscreen == isFullscreen &&
-        other.isMaximizable == isMaximizable &&
-        other.isMaximized == isMaximized &&
-        other.isMinimizable == isMinimizable &&
-        other.isMinimized == isMinimized &&
-        other.isMovable == isMovable &&
-        other.isRestorable == isRestorable &&
-        other.title == title;
-  }
-
-  @override
-  int get hashCode {
-    return Object.hash(
-      isActive,
-      isClosable,
-      isFullscreen,
-      isMaximizable,
-      isMaximized,
-      isMinimizable,
-      isMinimized,
-      isMovable,
-      isRestorable,
-      title,
-    );
-  }
-
-  @override
-  String toString() {
-    return 'YaruWindowState(isActive: $isActive, isClosable: $isClosable, isFullscreen: $isFullscreen, isMaximizable: $isMaximizable, isMaximized: $isMaximized, isMinimizable: $isMinimizable, isMinimized: $isMinimized, isMovable: $isMovable, isRestorable: $isRestorable, title: $title)';
-  }
 }

@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   window_manager: ^0.3.0
+  yaru_window_platform_interface:
+    path: packages/yaru_window_platform_interface ### TODO
 
 dev_dependencies:
   flutter_lints: ^2.0.0
