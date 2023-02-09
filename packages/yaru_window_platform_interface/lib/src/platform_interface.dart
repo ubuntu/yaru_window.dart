@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -17,18 +18,21 @@ abstract class YaruWindowPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  Future<void> init(int id) => throw UnimplementedError('init');
+
   Future<void> close(int id) => throw UnimplementedError('close');
   Future<void> drag(int id) => throw UnimplementedError('drag');
   Future<void> fullscreen(int id) => throw UnimplementedError('fullscreen');
   Future<void> hide(int id) => throw UnimplementedError('hide');
   Future<void> hideTitle(int id) => throw UnimplementedError('hideTitle');
-  Future<void> init(int id) => throw UnimplementedError('init');
   Future<void> maximize(int id) => throw UnimplementedError('maximize');
   Future<void> minimize(int id) => throw UnimplementedError('minimize');
   Future<void> restore(int id) => throw UnimplementedError('restore');
   Future<void> show(int id) => throw UnimplementedError('show');
   Future<void> showMenu(int id) => throw UnimplementedError('showMenu');
 
+  Future<void> setBackground(int id, Color color) =>
+      throw UnimplementedError('setBackground');
   Future<void> setTitle(int id, String title) =>
       throw UnimplementedError('setTitle');
   Future<void> setMinimizable(int id, bool minimizable) =>

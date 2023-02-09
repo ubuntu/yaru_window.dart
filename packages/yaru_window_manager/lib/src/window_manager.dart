@@ -17,6 +17,9 @@ class YaruWindowManager extends YaruWindowPlatform {
   static WindowManager wm = WindowManager.instance;
 
   @override
+  Future<void> init(int id) => wm.ensureInitialized();
+
+  @override
   Future<void> close(int id) => wm.close().catchError((_) {});
   @override
   Future<void> drag(int id) => wm.startDragging().catchError((_) {});
@@ -29,6 +32,11 @@ class YaruWindowManager extends YaruWindowPlatform {
   @override
   Future<void> showMenu(int id) => wm.popUpWindowMenu().catchError((_) {});
 
+  @override
+  Future<void> setBackground(int id, Color color) => wm
+      .setBackgroundColor(color)
+      .catchError((_) {})
+      .then((_) => _listener._updateState());
   @override
   Future<void> setTitle(int id, String title) => wm
       .setTitle(title)

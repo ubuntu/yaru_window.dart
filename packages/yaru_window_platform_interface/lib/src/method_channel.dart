@@ -12,6 +12,9 @@ class YaruWindowMethodChannel extends YaruWindowPlatform {
   final events = const EventChannel('yaru_window/events');
 
   @override
+  Future<void> init(int id) => _invokeMethod('init', [id]);
+
+  @override
   Future<void> close(int id) => _invokeMethod('close', [id]);
   @override
   Future<void> drag(int id) => _invokeMethod('drag', [id]);
@@ -21,8 +24,6 @@ class YaruWindowMethodChannel extends YaruWindowPlatform {
   Future<void> hide(int id) => _invokeMethod('hide', [id]);
   @override
   Future<void> hideTitle(int id) => _invokeMethod('hideTitle', [id]);
-  @override
-  Future<void> init(int id) => _invokeMethod('init', [id]);
   @override
   Future<void> maximize(int id) => _invokeMethod('maximize', [id]);
   @override
@@ -34,6 +35,9 @@ class YaruWindowMethodChannel extends YaruWindowPlatform {
   @override
   Future<void> showMenu(int id) => _invokeMethod('showMenu', [id]);
 
+  @override
+  Future<void> setBackground(int id, Color color) =>
+      _invokeMethod('setBackground', [id, color.value]);
   @override
   Future<void> setTitle(int id, String title) =>
       _invokeMethod('setTitle', [id, title]);
