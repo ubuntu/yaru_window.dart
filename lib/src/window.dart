@@ -76,10 +76,6 @@ class YaruWindow {
     return YaruWindow.of(context).states();
   }
 
-  static Future<void> maybePop(BuildContext context) {
-    return Navigator.maybePop(context);
-  }
-
   static Future<void> ensureInitialized() async {
     WidgetsFlutterBinding.ensureInitialized();
     if (!kIsWeb) {
