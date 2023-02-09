@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -11,10 +10,11 @@ class YaruWindowManager extends YaruWindowPlatform {
     YaruWindowPlatform.instance = YaruWindowManager();
   }
 
-  final _listener = _YaruWindowListener(wm);
+  _YaruWindowListener? __listener;
+  _YaruWindowListener get _listener => __listener ??= _YaruWindowListener(wm);
 
-  @visibleForTesting
-  static WindowManager wm = WindowManager.instance;
+  static WindowManager? _wm;
+  static WindowManager get wm => _wm ??= WindowManager.instance;
 
   @override
   Future<void> init(int id) => wm.ensureInitialized();
@@ -113,15 +113,14 @@ extension _YaruWindowManagerX on WindowManager {
       final title = values[8] as String;
       return YaruWindowState(
         isActive: active,
-        isClosable: closable && !Platform.isMacOS,
+        isClosable: closable,
         isFullscreen: fullscreen,
-        isMaximizable: maximizable && !maximized && !Platform.isMacOS,
+        isMaximizable: maximizable && !maximized,
         isMaximized: maximized,
-        isMinimizable: minimizable && !minimized && !Platform.isMacOS,
+        isMinimizable: minimizable && !minimized,
         isMinimized: minimized,
         isMovable: movable && !kIsWeb,
-        isRestorable:
-            (fullscreen || maximized || minimized) && !Platform.isMacOS,
+        isRestorable: fullscreen || maximized || minimized,
         title: title,
       );
     });
