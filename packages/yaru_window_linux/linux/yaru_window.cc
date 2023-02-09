@@ -56,7 +56,7 @@ FlValue* yaru_window_get_state(GtkWindow* window) {
   gboolean minimized = state & GDK_WINDOW_STATE_ICONIFIED;
   gboolean normal = type == GDK_WINDOW_TYPE_HINT_NORMAL;
   gboolean restorable = normal && (fullscreen || maximized || minimized);
-  const gchar* title = gtk_window_get_title(window);
+  const gchar* title = yaru_window_get_title(window);
   gboolean visible = gtk_widget_is_visible(GTK_WIDGET(window));
 
   FlValue* result = fl_value_new_map();
@@ -73,7 +73,9 @@ FlValue* yaru_window_get_state(GtkWindow* window) {
   fl_value_set_string_take(result, "minimized", fl_value_new_bool(minimized));
   fl_value_set_string_take(result, "movable", fl_value_new_bool(true));
   fl_value_set_string_take(result, "restorable", fl_value_new_bool(restorable));
-  fl_value_set_string_take(result, "title", fl_value_new_string(title));
+  if (title != nullptr) {
+    fl_value_set_string_take(result, "title", fl_value_new_string(title));
+  }
   fl_value_set_string_take(result, "visible", fl_value_new_bool(visible));
   return result;
 }
@@ -82,6 +84,31 @@ void yaru_window_drag(GtkWindow* window) {
   GdkPoint cursor = get_cursor_position(window);
   gtk_window_begin_move_drag(window, GDK_BUTTON_PRIMARY, cursor.x, cursor.y,
                              GDK_CURRENT_TIME);
+}
+
+const gchar* yaru_window_get_title(GtkWindow* window) {
+  GtkWidget* titlebar = gtk_window_get_titlebar(window);
+  if (!is_header_bar(titlebar)) {
+    titlebar = find_header_bar(GTK_WIDGET(window));
+  }
+  if (titlebar != nullptr) {
+    const gchar* title;
+    g_object_get(titlebar, "title", &title, nullptr);
+    return title;
+  }
+  return gtk_window_get_title(window);
+}
+
+void yaru_window_set_title(GtkWindow* window, const gchar* title) {
+  GtkWidget* titlebar = gtk_window_get_titlebar(window);
+  if (!is_header_bar(titlebar)) {
+    titlebar = find_header_bar(GTK_WIDGET(window));
+  }
+  if (titlebar != nullptr) {
+    g_object_set(titlebar, "title", title, nullptr);
+  } else {
+    gtk_window_set_title(window, title);
+  }
 }
 
 void yaru_window_hide_title(GtkWindow* window) {

@@ -8,6 +8,8 @@ G_BEGIN_DECLS
 
 FlValue* yaru_window_get_state(GtkWindow* window);
 void yaru_window_drag(GtkWindow* window);
+const gchar* yaru_window_get_title(GtkWindow* window);
+void yaru_window_set_title(GtkWindow* window, const gchar* title);
 void yaru_window_hide_title(GtkWindow* window);
 void yaru_window_show_title(GtkWindow* window);
 void yaru_window_restore(GtkWindow* window);

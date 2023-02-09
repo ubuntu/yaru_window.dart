@@ -164,7 +164,7 @@ static void yaru_window_linux_plugin_handle_method_call(
     gtk_window_set_deletable(window, fl_value_get_bool(closable));
   } else if (strcmp(method, "setTitle") == 0) {
     FlValue* title = fl_value_get_list_value(args, 1);
-    gtk_window_set_title(window, fl_value_get_string(title));
+    yaru_window_set_title(window, fl_value_get_string(title));
   } else {
     response = FL_METHOD_RESPONSE(fl_method_not_implemented_response_new());
   }
