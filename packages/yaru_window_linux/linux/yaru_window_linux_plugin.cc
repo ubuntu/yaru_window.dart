@@ -78,22 +78,22 @@ static void yaru_window_linux_plugin_listen_window(YaruWindowLinuxPlugin* self,
   if (!g_hash_table_contains(self->signals, GINT_TO_POINTER(window_id))) {
     g_signal_connect_object(window, "window-state-event",
                             G_CALLBACK(window_state_cb), self->event_channel,
-                            G_CONNECT_DEFAULT);
+                            GConnectFlags(0));
     g_signal_connect_object(G_OBJECT(window), "notify::deletable",
                             G_CALLBACK(window_property_cb), self->event_channel,
-                            G_CONNECT_DEFAULT);
+                            GConnectFlags(0));
     g_signal_connect_object(G_OBJECT(window), "notify::is-active",
                             G_CALLBACK(window_property_cb), self->event_channel,
-                            G_CONNECT_DEFAULT);
+                            GConnectFlags(0));
     g_signal_connect_object(G_OBJECT(window), "notify::is-maximized",
                             G_CALLBACK(window_property_cb), self->event_channel,
-                            G_CONNECT_DEFAULT);
+                            GConnectFlags(0));
     g_signal_connect_object(G_OBJECT(window), "notify::type-hint",
                             G_CALLBACK(window_property_cb), self->event_channel,
-                            G_CONNECT_DEFAULT);
+                            GConnectFlags(0));
     g_signal_connect_object(G_OBJECT(window), "delete-event",
                             G_CALLBACK(window_delete_event_cb),
-                            self->method_channel, G_CONNECT_DEFAULT);
+                            self->method_channel, GConnectFlags(0));
     g_hash_table_insert(self->signals, GINT_TO_POINTER(window_id), 0);
   }
 }
