@@ -189,17 +189,17 @@ class StateView extends StatelessWidget {
                 ],
               ),
             ),
-            // ListTile(
-            //   title: const Text('Visible'),
-            //   subtitle: Text('${state?.isVisible}'),
-            //   trailing: ElevatedButton(
-            //     onPressed: () => window
-            //         .hide()
-            //         .then((_) => Future.delayed(const Duration(seconds: 2)))
-            //         .then((_) => window.show()),
-            //     child: const Text('Hide 2s'),
-            //   ),
-            // ),
+            ListTile(
+              title: const Text('Visible'),
+              subtitle: Text('${state?.isVisible}'),
+              trailing: ElevatedButton(
+                onPressed: () => window
+                    .hide()
+                    .then((_) => Future.delayed(const Duration(seconds: 2)))
+                    .then((_) => window.show()),
+                child: const Text('Hide 2s'),
+              ),
+            ),
           ],
         );
       },
