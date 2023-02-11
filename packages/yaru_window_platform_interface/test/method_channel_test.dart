@@ -1,24 +1,11 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yaru_window_platform_interface/src/method_channel.dart';
-import 'package:yaru_window_platform_interface/src/state.dart';
+
+import 'state_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-
-  const testState = YaruWindowState(
-    isActive: true,
-    isClosable: true,
-    isFullscreen: false,
-    isMaximizable: true,
-    isMaximized: false,
-    isMinimizable: true,
-    isMinimized: false,
-    isMovable: true,
-    isRestorable: false,
-    title: 'foo bar',
-    isVisible: true,
-  );
 
   test('init', () async {
     final instance = YaruWindowMethodChannel();
