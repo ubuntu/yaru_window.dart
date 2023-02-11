@@ -49,7 +49,7 @@ FlValue* yaru_window_get_state(GtkWindow* window) {
   GdkWindowState state = gdk_window_get_state(handle);
   GdkWindowTypeHint type = gdk_window_get_type_hint(handle);
 
-  gboolean active = gtk_window_is_active(window);
+  gboolean active = state & GDK_WINDOW_STATE_FOCUSED;
   gboolean closable = gtk_window_get_deletable(window);
   gboolean fullscreen = state & GDK_WINDOW_STATE_FULLSCREEN;
   gboolean maximized = gtk_window_is_maximized(window);
