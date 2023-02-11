@@ -63,8 +63,8 @@ static void window_delete_response_cb(GObject* object, GAsyncResult* result,
   gtk_window_close(GTK_WINDOW(window));
 }
 
-gboolean window_delete_event_cb(GtkWidget* window, GdkEvent* /*event*/,
-                                gpointer user_data) {
+static gboolean window_delete_event_cb(GtkWidget* window, GdkEvent* /*event*/,
+                                       gpointer user_data) {
   FlMethodChannel* channel = FL_METHOD_CHANNEL(user_data);
   g_autoptr(FlValue) args = fl_value_new_int(0);  // TODO
   fl_method_channel_invoke_method(channel, "onClose", args, nullptr,
@@ -121,7 +121,9 @@ static void yaru_window_linux_plugin_handle_method_call(
   gint window_id = fl_value_get_int(fl_value_get_list_value(args, 0));
   GtkWindow* window = yaru_window_linux_plugin_get_window(self, window_id);
 
-  if (strcmp(method, "close") == 0) {
+  if (strcmp(method, "init") == 0) {
+    // nothing to do
+  } else if (strcmp(method, "close") == 0) {
     gtk_window_close(window);
   } else if (strcmp(method, "drag") == 0) {
     yaru_window_drag(window);

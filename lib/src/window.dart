@@ -72,6 +72,10 @@ class YaruWindow {
     return YaruWindow.of(context).states();
   }
 
+  static void onClose(BuildContext context, FutureOr<bool> Function() handler) {
+    YaruWindow.of(context).onClose(handler);
+  }
+
   static Future<void> ensureInitialized() async {
     WidgetsFlutterBinding.ensureInitialized();
     if (!kIsWeb) {
@@ -111,5 +115,9 @@ class YaruWindowInstance {
   Stream<YaruWindowState> states() async* {
     yield await _platform.state(_id);
     yield* _platform.states(_id);
+  }
+
+  void onClose(FutureOr<bool> Function() handler) {
+    _platform.onClose(_id, handler);
   }
 }

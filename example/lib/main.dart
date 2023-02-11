@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // YaruWindow.of(context).onClose(() => showConfirmationDialog(context));
+    YaruWindow.of(context).onClose(() => showConfirmationDialog(context));
   }
 
   @override
@@ -49,28 +49,28 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// Future<bool> showConfirmationDialog(BuildContext context) async {
-//   if (!context.mounted) return true;
-//   if (ModalRoute.of(context)?.isCurrent == false) return false;
-//   return showDialog(
-//     context: context,
-//     builder: (context) {
-//       return AlertDialog(
-//         title: const Text('Close window?'),
-//         actions: [
-//           TextButton(
-//             onPressed: () => Navigator.pop(context, true),
-//             child: const Text('Yes'),
-//           ),
-//           TextButton(
-//             onPressed: () => Navigator.pop(context, false),
-//             child: const Text('No'),
-//           ),
-//         ],
-//       );
-//     },
-//   ).then((value) => value == true);
-// }
+Future<bool> showConfirmationDialog(BuildContext context) async {
+  if (!context.mounted) return true;
+  if (ModalRoute.of(context)?.isCurrent == false) return false;
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Close window?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Yes'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('No'),
+          ),
+        ],
+      );
+    },
+  ).then((value) => value == true);
+}
 
 class StateView extends StatelessWidget {
   const StateView({super.key});
