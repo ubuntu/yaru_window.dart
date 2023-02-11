@@ -40,6 +40,8 @@ class YaruWindowMethodChannel extends YaruWindowPlatform {
   Future<void> show(int id) => _invokeMethod('show', [id]);
   @override
   Future<void> showMenu(int id) => _invokeMethod('showMenu', [id]);
+  @override
+  Future<void> showTitle(int id) => _invokeMethod('showTitle', [id]);
 
   @override
   Future<void> setBackground(int id, Color color) =>

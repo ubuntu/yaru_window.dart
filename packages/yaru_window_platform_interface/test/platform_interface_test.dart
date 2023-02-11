@@ -61,6 +61,10 @@ void main() {
       throwsUnimplementedError('showMenu'),
     );
     await expectLater(
+      () => YaruWindowPlatform.instance.showTitle(0),
+      throwsUnimplementedError('showTitle'),
+    );
+    await expectLater(
       () => YaruWindowPlatform.instance.setBackground(0, Colors.black),
       throwsUnimplementedError('setBackground'),
     );

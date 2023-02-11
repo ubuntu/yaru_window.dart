@@ -41,8 +41,8 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(title: const Text('YaruWindow example')),
       body: Row(
         children: const [
-          Expanded(flex: 3, child: ColorSelector()),
-          Expanded(flex: 2, child: StateView()),
+          Expanded(child: ColorSelector()),
+          Expanded(child: StateView()),
         ],
       ),
     );
@@ -156,22 +156,37 @@ class StateView extends StatelessWidget {
             ListTile(
               title: const Text('Title'),
               subtitle: Text('${state?.title}'),
-              trailing: ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text('Title'),
-                      content: TextFormField(
-                        autofocus: true,
-                        initialValue: state?.title,
-                        onFieldSubmitted: Navigator.of(context).pop,
-                        onChanged: window.setTitle,
-                      ),
-                    ),
-                  );
-                },
-                child: const Text('Edit'),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ElevatedButton(
+                    onPressed: window.showTitle,
+                    child: const Text('Show'),
+                  ),
+                  const SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: window.hideTitle,
+                    child: const Text('Hide'),
+                  ),
+                  const SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Title'),
+                          content: TextFormField(
+                            autofocus: true,
+                            initialValue: state?.title,
+                            onFieldSubmitted: Navigator.of(context).pop,
+                            onChanged: window.setTitle,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Text('Edit'),
+                  ),
+                ],
               ),
             ),
             // ListTile(
