@@ -82,7 +82,7 @@ class StateView extends StatelessWidget {
       stream: window.states(),
       builder: (context, snapshot) {
         final state = snapshot.data;
-        print(state);
+        debugPrint(state?.toString());
         return ListView(
           padding: const EdgeInsets.all(20),
           children: [
