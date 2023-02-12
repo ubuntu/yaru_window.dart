@@ -1,7 +1,9 @@
 import 'package:meta/meta.dart';
 
+/// The state of a window.
 @immutable
 class YaruWindowState {
+  /// Creates a new [YaruWindowState].
   const YaruWindowState({
     this.isActive,
     this.isClosable,
@@ -16,6 +18,7 @@ class YaruWindowState {
     this.isVisible,
   });
 
+  /// Creates a new [YaruWindowState] from a JSON object.
   factory YaruWindowState.fromJson(Map<String, dynamic> json) {
     return YaruWindowState(
       isActive: json['active'],
@@ -32,18 +35,40 @@ class YaruWindowState {
     );
   }
 
+  /// Whether the window is active.
   final bool? isActive;
+
+  /// Whether the window is closable.
   final bool? isClosable;
+
+  /// Whether the window is fullscreen.
   final bool? isFullscreen;
+
+  /// Whether the window is maximizable.
   final bool? isMaximizable;
+
+  /// Whether the window is maximized.
   final bool? isMaximized;
+
+  /// Whether the window is minimizable.
   final bool? isMinimizable;
+
+  /// Whether the window is minimized.
   final bool? isMinimized;
+
+  /// Whether the window is movable.
   final bool? isMovable;
+
+  /// Whether the window is restorable.
   final bool? isRestorable;
+
+  /// The title of the window.
   final String? title;
+
+  /// Whether the window is visible.
   final bool? isVisible;
 
+  /// Converts the state to a JSON object.
   Map<String, dynamic> toJson() {
     return {
       'active': isActive,
@@ -60,6 +85,7 @@ class YaruWindowState {
     };
   }
 
+  /// Copies the state with the specified fields replaced with new values.
   YaruWindowState copyWith({
     bool? isActive,
     bool? isClosable,
@@ -88,6 +114,7 @@ class YaruWindowState {
     );
   }
 
+  /// Merges the state with another [YaruWindowState].
   YaruWindowState merge(YaruWindowState? other) {
     return copyWith(
       isActive: other?.isActive,
