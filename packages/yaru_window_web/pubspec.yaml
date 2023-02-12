@@ -1,5 +1,8 @@
 name: yaru_window_web
-publish_to: 'none'
+description: A stub implementation of yaru_window for Web.
+repository: https://github.com/ubuntu-flutter-community/yaru_window.dart
+issue_tracker: https://github.com/ubuntu-flutter-community/yaru_window.dart/issues
+version: 0.0.1
 
 environment:
   sdk: '>=2.19.0 <3.0.0'
