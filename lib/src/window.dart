@@ -6,13 +6,13 @@ import 'package:yaru_window_platform_interface/yaru_window_platform_interface.da
 class YaruWindow {
   static final Map<Object, YaruWindowInstance> _windows = {};
 
-  static YaruWindowInstance instance([int id = 0]) {
+  static YaruWindowInstance _instance([int id = 0]) {
     return _windows[id] ??= YaruWindowInstance._(id);
   }
 
   static YaruWindowInstance of(BuildContext context) {
     const id = 0; // View.of(context).windowId;
-    return instance(id);
+    return _instance(id);
   }
 
   static Future<void> close(BuildContext context) {
@@ -93,7 +93,7 @@ class YaruWindow {
 
   static Future<YaruWindowInstance> ensureInitialized() async {
     WidgetsFlutterBinding.ensureInitialized();
-    final window = YaruWindow.instance(0);
+    final window = YaruWindow._instance(0);
     await window.init();
     return window;
   }

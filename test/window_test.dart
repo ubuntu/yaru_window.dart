@@ -51,7 +51,7 @@ void main() {
     await tester.pumpWidget(const MaterialApp());
 
     final context = tester.element(find.byType(MaterialApp));
-    expect(YaruWindow.of(context), same(YaruWindow.instance(0)));
+    expect(YaruWindow.of(context), isNotNull);
 
     await YaruWindow.ensureInitialized();
     verify(() => platform.init(0)).called(1);
