@@ -10,13 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  yaru_window_linux:
-    path: packages/yaru_window_linux ### TODO
-  yaru_window_manager:
-    path: packages/yaru_window_manager ### TODO
+  yaru_window_linux: ^0.1.0
+  yaru_window_manager: ^0.1.0
   yaru_window_platform_interface: ^0.1.0
-  yaru_window_web:
-    path: packages/yaru_window_web ### TODO
+  yaru_window_web: ^0.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
