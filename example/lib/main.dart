@@ -38,7 +38,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(title: const Text('YaruWindow example')),
       body: Row(
         children: const [
           Expanded(child: ColorSelector()),
