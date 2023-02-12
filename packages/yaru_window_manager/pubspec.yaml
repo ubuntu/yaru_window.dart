@@ -1,5 +1,9 @@
 name: yaru_window_manager
-publish_to: 'none'
+description: |
+  A window_manager -based implementation of yaru_window for macOS and Windows.
+repository: https://github.com/ubuntu-flutter-community/yaru_window.dart
+issue_tracker: https://github.com/ubuntu-flutter-community/yaru_window.dart/issues
+version: 0.1.0
 
 environment:
   sdk: '>=2.19.0 <3.0.0'
