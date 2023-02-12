@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
 import 'package:yaru_window_platform_interface/yaru_window_platform_interface.dart';
@@ -63,6 +64,13 @@ class YaruWindow {
     return YaruWindow.of(context).setBackground(color);
   }
 
+  static Future<void> setBrightness(
+    BuildContext context,
+    Brightness brightness,
+  ) {
+    return YaruWindow.of(context).setBrightness(brightness);
+  }
+
   static Future<void> setTitle(BuildContext context, String title) {
     return YaruWindow.of(context).setTitle(title);
   }
@@ -125,6 +133,8 @@ class YaruWindowInstance {
 
   Future<void> setBackground(Color color) =>
       _platform.setBackground(_id, color);
+  Future<void> setBrightness(Brightness brightness) =>
+      _platform.setBrightness(_id, brightness);
   Future<void> setTitle(String title) => _platform.setTitle(_id, title);
   Future<void> setMinimizable(bool minimizable) =>
       _platform.setMinimizable(_id, minimizable);

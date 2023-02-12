@@ -64,6 +64,11 @@ abstract class YaruWindowPlatform extends PlatformInterface {
     throw UnimplementedError('setBackground');
   }
 
+  /// Sets the brightness of the window with the given [id].
+  Future<void> setBrightness(int id, Brightness brightness) {
+    throw UnimplementedError('setBrightness');
+  }
+
   /// Sets the title of the window with the given [id].
   Future<void> setTitle(int id, String title) {
     throw UnimplementedError('setTitle');

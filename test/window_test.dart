@@ -8,6 +8,7 @@ import 'package:yaru_window_platform_interface/yaru_window_platform_interface.da
 void main() {
   setUpAll(() {
     registerFallbackValue(Colors.red);
+    registerFallbackValue(Brightness.light);
   });
 
   testWidgets('platform', (tester) async {
@@ -38,6 +39,7 @@ void main() {
     when(() => platform.showMenu(any())).thenAnswer((_) async {});
     when(() => platform.showTitle(any())).thenAnswer((_) async {});
     when(() => platform.setBackground(any(), any())).thenAnswer((_) async {});
+    when(() => platform.setBrightness(any(), any())).thenAnswer((_) async {});
     when(() => platform.setTitle(any(), any())).thenAnswer((_) async {});
     when(() => platform.setMinimizable(any(), any())).thenAnswer((_) async {});
     when(() => platform.setMaximizable(any(), any())).thenAnswer((_) async {});
@@ -91,6 +93,9 @@ void main() {
 
     await YaruWindow.setBackground(context, Colors.red);
     verify(() => platform.setBackground(0, Colors.red)).called(1);
+
+    await YaruWindow.setBrightness(context, Brightness.dark);
+    verify(() => platform.setBrightness(0, Brightness.dark)).called(1);
 
     await YaruWindow.setTitle(context, 'foo bar');
     verify(() => platform.setTitle(0, 'foo bar')).called(1);

@@ -151,6 +151,9 @@ static void yaru_window_linux_plugin_handle_method_call(
   } else if (strcmp(method, "setBackground") == 0) {
     FlValue* background = fl_value_get_list_value(args, 1);
     yaru_window_set_background(window, fl_value_get_int(background));
+  } else if (strcmp(method, "setBrightness") == 0) {
+    FlValue* brightness = fl_value_get_list_value(args, 1);
+    yaru_window_set_brightness(window, fl_value_get_string(brightness));
   } else if (strcmp(method, "setMinimizable") == 0 ||
              strcmp(method, "setMaximizable") == 0) {
     FlValue* minimizable = fl_value_get_list_value(args, 1);
