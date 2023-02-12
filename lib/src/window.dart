@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:yaru_window_platform_interface/yaru_window_platform_interface.dart';
 
@@ -92,11 +91,11 @@ class YaruWindow {
     YaruWindow.of(context).onClose(handler);
   }
 
-  static Future<void> ensureInitialized() async {
+  static Future<YaruWindowInstance> ensureInitialized() async {
     WidgetsFlutterBinding.ensureInitialized();
-    if (!kIsWeb) {
-      return YaruWindow.instance(0).init();
-    }
+    final window = YaruWindow.instance(0);
+    await window.init();
+    return window;
   }
 }
 
