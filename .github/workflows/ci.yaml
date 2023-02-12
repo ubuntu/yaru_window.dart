@@ -22,6 +22,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
       - uses: bluefireteam/melos-action@v2
+      - run: sudo apt update
       - run: sudo apt install -y lcov
       - run: melos coverage
       - uses: codecov/codecov-action@v3
@@ -36,31 +37,24 @@ jobs:
       - uses: bluefireteam/melos-action@v2
       - run: melos format
 
-  integration:
-    runs-on: ubuntu-latest
+  linux:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, ubuntu-20.04]
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
-      - name: Install tools
-        run: |
-          sudo apt update
-          sudo apt install -y clang cmake curl libgtk-3-dev ninja-build pkg-config unzip xvfb
+      - run: sudo apt update
+      - run: sudo apt install -y clang cmake curl libgtk-3-dev ninja-build pkg-config unzip xvfb
         env:
           DEBIAN_FRONTEND: noninteractive
       - run: flutter pub get
+        working-directory: example
+      - run: flutter build linux -v
+        working-directory: example
       - name: Run flutter test integration_test
         run: xvfb-run -a -s '-screen 0 1024x768x24 +extension GLX' flutter test -d linux integration_test
-        working-directory: example
-
-  linux:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: sudo snap install flutter --classic
-      - run: echo "$HOME/snap/flutter/common/flutter/.pub-cache/bin" >> $GITHUB_PATH
-      - run: flutter doctor -v
-      - uses: bluefireteam/melos-action@v2
-      - run: flutter build linux -v
         working-directory: example
 
   macos:
@@ -68,7 +62,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
+      - run: flutter pub get
+        working-directory: example
       - run: flutter build macos -v
+        working-directory: example
+      - name: Run flutter test integration_test
+        if: ${{false}} ### TODO: timeout
+        run: flutter test -d macos integration_test
         working-directory: example
 
   pub:
@@ -80,10 +80,7 @@ jobs:
       - run: melos exec -c 1 --no-private -- dart pub publish --dry-run
 
   test:
-    runs-on: ${{matrix.os}}
-    strategy:
-      matrix:
-        os: [ubuntu-22.04, ubuntu-20.04]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
@@ -96,7 +93,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
       - uses: bluefireteam/melos-action@v2
-      - run: flutter doctor -v
+      - run: flutter pub get
+        working-directory: example
       - run: flutter build web -v
         working-directory: example
 
@@ -105,5 +103,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
+      - run: flutter pub get
+        working-directory: example
       - run: flutter build windows -v
+        working-directory: example
+      - name: Run flutter test integration_test
+        run: flutter test -d windows integration_test
         working-directory: example
