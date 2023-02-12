@@ -39,7 +39,5 @@ scripts:
 
   # run tests in all packages
   test: >
-    melos exec -c 1 --fail-fast --dir-exists=test --no-flutter -- \
-      dart test
-    melos exec -c 1 --fail-fast --dir-exists=test --flutter -- \
+    melos exec -c 1 --fail-fast --dir-exists=test -- \
       flutter test
