@@ -36,21 +36,6 @@ jobs:
       - uses: bluefireteam/melos-action@v1
       - run: melos format
 
-  generate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-      - uses: bluefireteam/melos-action@v1
-      - run: melos generate
-      - run: ./.github/scripts/check-outdated-files.sh
-        if: github.event_name != 'push'
-      - uses: peter-evans/create-pull-request@v3
-        if: github.event_name != 'pull_request'
-        with:
-          title: 'Regenerate files'
-          commit-message: 'Regenerate files'
-
   linux:
     runs-on: ubuntu-latest
     steps:
