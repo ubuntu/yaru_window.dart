@@ -85,7 +85,7 @@ class YaruWindowMethodChannel extends YaruWindowPlatform {
   }
 
   @override
-  void onClose(int id, FutureOr<bool> Function() handler) {
+  Future<void> onClose(int id, FutureOr<bool> Function() handler) async {
     _onCloseHandlers.add(handler);
   }
 

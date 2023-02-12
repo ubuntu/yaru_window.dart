@@ -51,5 +51,5 @@ class YaruWebWindow extends YaruWindowPlatform {
   Stream<YaruWindowState> states(int id) => const Stream.empty();
 
   @override
-  void onClose(int id, FutureOr<bool> Function() handler) {}
+  Future<void> onClose(int id, FutureOr<bool> Function() handler) async {}
 }
