@@ -14,8 +14,7 @@ dependencies:
     path: packages/yaru_window_linux ### TODO
   yaru_window_manager:
     path: packages/yaru_window_manager ### TODO
-  yaru_window_platform_interface:
-    path: packages/yaru_window_platform_interface ### TODO
+  yaru_window_platform_interface: ^0.1.0
   yaru_window_web:
     path: packages/yaru_window_web ### TODO
 
