@@ -19,7 +19,7 @@ class YaruWindowManager extends YaruWindowPlatform {
   WindowManager get _wm => __wm ??= WindowManager.instance;
 
   @override
-  Future<void> init(int id) => _wm.ensureInitialized();
+  Future<void> init(int id) => _wm.ensureInitialized().catchError((_) {});
 
   @override
   Future<void> close(int id) => _wm.close().catchError((_) {});
