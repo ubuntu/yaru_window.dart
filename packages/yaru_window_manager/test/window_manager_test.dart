@@ -10,6 +10,7 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(const Color(0xff000000));
+    registerFallbackValue(Brightness.dark);
     registerFallbackValue(TitleBarStyle.normal);
     registerFallbackValue(FakeWindowListener());
   });
@@ -33,6 +34,7 @@ void main() {
     when(wm.popUpWindowMenu).thenAnswer((_) async {});
     when(() => wm.setTitle(any())).thenAnswer((_) async {});
     when(() => wm.setBackgroundColor(any())).thenAnswer((_) async {});
+    when(() => wm.setBrightness(any())).thenAnswer((_) async {});
     when(() => wm.setMinimizable(any())).thenAnswer((_) async {});
     when(() => wm.setMaximizable(any())).thenAnswer((_) async {});
     when(() => wm.setClosable(any())).thenAnswer((_) async {});
@@ -74,6 +76,9 @@ void main() {
 
     await YaruWindowPlatform.instance.setBackground(0, Colors.black);
     verify(() => wm.setBackgroundColor(Colors.black)).called(1);
+
+    await YaruWindowPlatform.instance.setBrightness(0, Brightness.dark);
+    verify(() => wm.setBrightness(Brightness.dark)).called(1);
 
     await YaruWindowPlatform.instance.setTitle(0, 'foo bar');
     verify(() => wm.setTitle('foo bar')).called(1);

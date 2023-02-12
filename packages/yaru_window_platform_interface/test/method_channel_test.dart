@@ -137,6 +137,16 @@ void main() {
     await instance.setBackground(123, const Color(0x11223344));
   });
 
+  test('setBrightness', () async {
+    final instance = YaruWindowMethodChannel();
+    instance.channel.setMockMethodCallHandler((call) async {
+      expect(call.method, 'setBrightness');
+      expect(call.arguments, [123, 'dark']);
+      return null;
+    });
+    await instance.setBrightness(123, Brightness.dark);
+  });
+
   test('setTitle', () async {
     final instance = YaruWindowMethodChannel();
     instance.channel.setMockMethodCallHandler((call) async {

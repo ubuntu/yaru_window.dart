@@ -69,6 +69,10 @@ void main() {
       throwsUnimplementedError('setBackground'),
     );
     await expectLater(
+      () => YaruWindowPlatform.instance.setBrightness(0, Brightness.light),
+      throwsUnimplementedError('setBrightness'),
+    );
+    await expectLater(
       () => YaruWindowPlatform.instance.setTitle(0, ''),
       throwsUnimplementedError('setTitle'),
     );

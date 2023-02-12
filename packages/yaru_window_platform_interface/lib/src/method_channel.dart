@@ -47,6 +47,9 @@ class YaruWindowMethodChannel extends YaruWindowPlatform {
   Future<void> setBackground(int id, Color color) =>
       _invokeMethod('setBackground', [id, color.value]);
   @override
+  Future<void> setBrightness(int id, Brightness brightness) =>
+      _invokeMethod('setBrightness', [id, brightness.name]);
+  @override
   Future<void> setTitle(int id, String title) =>
       _invokeMethod('setTitle', [id, title]);
   @override

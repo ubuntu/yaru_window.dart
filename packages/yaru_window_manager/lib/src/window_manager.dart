@@ -59,6 +59,9 @@ class YaruWindowManager extends YaruWindowPlatform {
   Future<void> setBackground(int id, Color color) =>
       _wm.invokeSetter(_wm.setBackgroundColor, color);
   @override
+  Future<void> setBrightness(int id, Brightness brightness) =>
+      _wm.invokeSetter(_wm.setBrightness, brightness);
+  @override
   Future<void> setTitle(int id, String title) => _wm
       .invokeSetter(_wm.setTitle, title)
       .then((_) => _listener._updateState());

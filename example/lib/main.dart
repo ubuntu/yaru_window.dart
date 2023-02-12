@@ -91,6 +91,23 @@ class StateView extends StatelessWidget {
               subtitle: Text('${state?.isActive}'),
             ),
             ListTile(
+              title: const Text('Brightness'),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ElevatedButton(
+                    onPressed: () => window.setBrightness(Brightness.light),
+                    child: const Text('Light'),
+                  ),
+                  const SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () => window.setBrightness(Brightness.dark),
+                    child: const Text('Dark'),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
               title: const Text('Closable'),
               subtitle: Text('${state?.isClosable}'),
               trailing: ElevatedButton(
