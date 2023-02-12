@@ -8,6 +8,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
   window_manager: ^0.3.0
   yaru_window_platform_interface:
     path: ../yaru_window_platform_interface ### TODO
@@ -24,5 +26,8 @@ flutter:
     platforms:
       macos:
         dartPluginClass: YaruWindowManager
+      web:
+        pluginClass: YaruWindowManager
+        fileName: src/window_manager.dart
       windows:
         dartPluginClass: YaruWindowManager

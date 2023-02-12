@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:yaru_window_platform_interface/yaru_window_platform_interface.dart';
 
 class YaruWindowManager extends YaruWindowPlatform {
   YaruWindowManager([@visibleForTesting this.__wm]);
 
-  static void registerWith() {
+  static void registerWith([Registrar? registrar]) {
     YaruWindowPlatform.instance = YaruWindowManager();
   }
 
@@ -19,73 +20,63 @@ class YaruWindowManager extends YaruWindowPlatform {
   WindowManager get _wm => __wm ??= WindowManager.instance;
 
   @override
-  Future<void> init(int id) => _wm.ensureInitialized().catchError((_) {});
+  Future<void> init(int id) => _wm.invokeMethod(_wm.ensureInitialized);
 
   @override
-  Future<void> close(int id) => _wm.close().catchError((_) {});
+  Future<void> close(int id) => _wm.invokeMethod(_wm.close);
   @override
-  Future<void> drag(int id) => _wm.startDragging().catchError((_) {});
+  Future<void> drag(int id) => _wm.invokeMethod(_wm.startDragging);
   @override
-  Future<void> fullscreen(int id) => _wm.setFullScreen(true).catchError((_) {});
+  Future<void> fullscreen(int id) => _wm.invokeSetter(_wm.setFullScreen, true);
   @override
-  Future<void> hide(int id) => _wm.hide().catchError((_) {});
+  Future<void> hide(int id) => _wm.invokeMethod(_wm.hide);
   @override
-  Future<void> hideTitle(int id) => _wm
-      .setTitleBarStyle(TitleBarStyle.hidden)
-      .catchError((_) {})
-      .then((_) => _listener._updateState());
+  Future<void> hideTitle(int id) =>
+      _wm.invokeSetter(_wm.setTitleBarStyle, TitleBarStyle.hidden);
   @override
-  Future<void> maximize(int id) => _wm.maximize().catchError((_) {});
+  Future<void> maximize(int id) => _wm.invokeMethod(_wm.maximize);
   @override
-  Future<void> minimize(int id) => _wm.minimize().catchError((_) {});
+  Future<void> minimize(int id) => _wm.invokeMethod(_wm.minimize);
   @override
   Future<void> restore(int id) async {
-    if (await _wm.isFullScreen()) {
-      return _wm.setFullScreen(false).catchError((_) {});
-    } else if (await _wm.isMaximized()) {
-      return _wm.unmaximize().catchError((_) {});
-    } else if (await _wm.isMinimized()) {
-      return _wm.restore().catchError((_) {});
+    if (await _wm.invokeGetter(_wm.isFullScreen, orElse: false)) {
+      return _wm.invokeSetter(_wm.setFullScreen, false);
+    } else if (await _wm.invokeGetter(_wm.isMaximized, orElse: false)) {
+      return _wm.invokeMethod(_wm.unmaximize);
+    } else if (await _wm.invokeGetter(_wm.isMinimized, orElse: false)) {
+      return _wm.invokeMethod(_wm.restore);
     }
   }
 
   @override
-  Future<void> show(int id) => _wm.show().catchError((_) {});
+  Future<void> show(int id) => _wm.invokeMethod(_wm.show);
   @override
-  Future<void> showMenu(int id) => _wm.popUpWindowMenu().catchError((_) {});
+  Future<void> showMenu(int id) => _wm.invokeMethod(_wm.popUpWindowMenu);
   @override
-  Future<void> showTitle(int id) => _wm
-      .setTitleBarStyle(TitleBarStyle.normal)
-      .catchError((_) {})
-      .then((_) => _listener._updateState());
+  Future<void> showTitle(int id) =>
+      _wm.invokeSetter(_wm.setTitleBarStyle, TitleBarStyle.normal);
 
   @override
-  Future<void> setBackground(int id, Color color) => _wm
-      .setBackgroundColor(color)
-      .catchError((_) {})
-      .then((_) => _listener._updateState());
+  Future<void> setBackground(int id, Color color) =>
+      _wm.invokeSetter(_wm.setBackgroundColor, color);
   @override
   Future<void> setTitle(int id, String title) => _wm
-      .setTitle(title)
-      .catchError((_) {})
+      .invokeSetter(_wm.setTitle, title)
       .then((_) => _listener._updateState());
 
   @override
   Future<void> setMinimizable(int id, bool minimizable) => _wm
-      .setMinimizable(minimizable)
-      .catchError((_) {})
+      .invokeSetter(_wm.setMinimizable, minimizable)
       .then((_) => _listener._updateState());
 
   @override
   Future<void> setMaximizable(int id, bool maximizable) => _wm
-      .setMaximizable(maximizable)
-      .catchError((_) {})
+      .invokeSetter(_wm.setMaximizable, maximizable)
       .then((_) => _listener._updateState());
 
   @override
   Future<void> setClosable(int id, bool closable) => _wm
-      .setClosable(closable)
-      .catchError((_) {})
+      .invokeSetter(_wm.setClosable, closable)
       .then((_) => _listener._updateState());
 
   @override
@@ -95,7 +86,7 @@ class YaruWindowManager extends YaruWindowPlatform {
 }
 
 extension _YaruWindowManagerX on WindowManager {
-  Future<T> _invokeGetter<T>(
+  Future<T> invokeGetter<T>(
     Future<T> Function() getter, {
     required T orElse,
   }) async {
@@ -106,18 +97,33 @@ extension _YaruWindowManagerX on WindowManager {
     }
   }
 
+  Future<void> invokeSetter<T>(
+    Future<void> Function(T value) setter,
+    T value,
+  ) async {
+    try {
+      return await setter(value);
+    } on MissingPluginException catch (_) {}
+  }
+
+  Future<void> invokeMethod(Future<void> Function() method) async {
+    try {
+      return await method();
+    } on MissingPluginException catch (_) {}
+  }
+
   Future<YaruWindowState> state() {
     return Future.wait([
-      _invokeGetter(isFocused, orElse: true),
-      _invokeGetter(isClosable, orElse: true),
-      _invokeGetter(isFullScreen, orElse: false),
-      _invokeGetter(isMaximizable, orElse: true),
-      _invokeGetter(isMaximized, orElse: false),
-      _invokeGetter(isMinimizable, orElse: true),
-      _invokeGetter(isMinimized, orElse: false),
-      _invokeGetter(isMovable, orElse: true),
-      _invokeGetter(getTitle, orElse: ''),
-      _invokeGetter(isVisible, orElse: true),
+      invokeGetter(isFocused, orElse: true),
+      invokeGetter(isClosable, orElse: true),
+      invokeGetter(isFullScreen, orElse: false),
+      invokeGetter(isMaximizable, orElse: true),
+      invokeGetter(isMaximized, orElse: false),
+      invokeGetter(isMinimizable, orElse: true),
+      invokeGetter(isMinimized, orElse: false),
+      invokeGetter(isMovable, orElse: true),
+      invokeGetter(getTitle, orElse: ''),
+      invokeGetter(isVisible, orElse: true),
     ]).then((values) {
       final active = values[0] as bool;
       final closable = values[1] as bool;

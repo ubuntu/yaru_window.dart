@@ -31,5 +31,7 @@ flutter:
         default_package: yaru_window_linux
       macos:
         default_package: yaru_window_manager
+      web:
+        default_package: yaru_window_manager
       windows:
         default_package: yaru_window_manager
