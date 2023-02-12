@@ -16,6 +16,8 @@ dependencies:
     path: packages/yaru_window_manager ### TODO
   yaru_window_platform_interface:
     path: packages/yaru_window_platform_interface ### TODO
+  yaru_window_web:
+    path: packages/yaru_window_web ### TODO
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -32,6 +34,6 @@ flutter:
       macos:
         default_package: yaru_window_manager
       web:
-        default_package: yaru_window_manager
+        default_package: yaru_window_web
       windows:
         default_package: yaru_window_manager

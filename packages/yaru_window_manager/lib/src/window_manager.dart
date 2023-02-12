@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:yaru_window_platform_interface/yaru_window_platform_interface.dart';
 
 class YaruWindowManager extends YaruWindowPlatform {
   YaruWindowManager([@visibleForTesting this.__wm]);
 
-  static void registerWith([Registrar? registrar]) {
+  static void registerWith() {
     YaruWindowPlatform.instance = YaruWindowManager();
   }
 
