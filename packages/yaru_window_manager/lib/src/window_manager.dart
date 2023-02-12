@@ -82,6 +82,11 @@ class YaruWindowManager extends YaruWindowPlatform {
   Future<YaruWindowState> state(int id) => _wm.state();
   @override
   Stream<YaruWindowState> states(int id) => _listener.states();
+
+  @override
+  Future<void> onClose(int id, FutureOr<bool> Function() handler) {
+    return _listener.addCloseHandler(handler);
+  }
 }
 
 extension _YaruWindowManagerX on WindowManager {
@@ -187,4 +192,23 @@ class _YaruWindowListener extends WindowListener {
   void onWindowMinimize() => _updateState();
   @override
   void onWindowRestore() => _updateState();
+  @override
+  void onWindowClose() => _handleClose();
+
+  final _onCloseHandlers = <FutureOr<bool> Function()>[];
+
+  Future<void> addCloseHandler(FutureOr<bool> Function() handler) {
+    _onCloseHandlers.add(handler);
+    return _wm.setPreventClose(true);
+  }
+
+  Future<void> _handleClose() async {
+    for (final handler in _onCloseHandlers) {
+      if (!await handler()) {
+        return;
+      }
+    }
+    await _wm.setPreventClose(false);
+    await _wm.close();
+  }
 }

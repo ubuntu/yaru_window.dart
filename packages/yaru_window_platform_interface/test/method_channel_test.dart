@@ -242,7 +242,7 @@ void main() {
     }
 
     var wasConfirmed = false;
-    instance.onClose(123, () {
+    await instance.onClose(123, () {
       wasConfirmed = true;
       return true;
     });

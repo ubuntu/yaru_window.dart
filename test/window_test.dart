@@ -44,7 +44,7 @@ void main() {
     when(() => platform.setClosable(any(), any())).thenAnswer((_) async {});
     when(() => platform.state(any())).thenAnswer((_) async => state);
     when(() => platform.states(any())).thenAnswer((_) => Stream.value(change));
-    when(() => platform.onClose(any(), any())).thenAnswer((_) {});
+    when(() => platform.onClose(any(), any())).thenAnswer((_) async {});
 
     YaruWindowPlatform.instance = platform;
 
@@ -112,7 +112,7 @@ void main() {
     verify(() => platform.state(0)).called(1);
     verify(() => platform.states(0)).called(1);
 
-    YaruWindow.onClose(context, () => true);
+    await YaruWindow.onClose(context, () => true);
     verify(() => platform.onClose(0, any())).called(1);
   });
 }

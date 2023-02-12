@@ -87,8 +87,11 @@ class YaruWindow {
     return YaruWindow.of(context).states();
   }
 
-  static void onClose(BuildContext context, FutureOr<bool> Function() handler) {
-    YaruWindow.of(context).onClose(handler);
+  static Future<void> onClose(
+    BuildContext context,
+    FutureOr<bool> Function() handler,
+  ) {
+    return YaruWindow.of(context).onClose(handler);
   }
 
   static Future<YaruWindowInstance> ensureInitialized() async {
@@ -136,7 +139,7 @@ class YaruWindowInstance {
     yield* _platform.states(_id);
   }
 
-  void onClose(FutureOr<bool> Function() handler) {
-    _platform.onClose(_id, handler);
+  Future<void> onClose(FutureOr<bool> Function() handler) {
+    return _platform.onClose(_id, handler);
   }
 }
