@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
-      - uses: bluefireteam/melos-action@v1
+      - uses: bluefireteam/melos-action@v2
       - run: melos analyze
 
   coverage:
@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
-      - uses: bluefireteam/melos-action@v1
+      - uses: bluefireteam/melos-action@v2
       - run: sudo apt install -y lcov
       - run: melos coverage
       - uses: codecov/codecov-action@v3
@@ -33,7 +33,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
-      - uses: bluefireteam/melos-action@v1
+      - uses: bluefireteam/melos-action@v2
       - run: melos format
 
   linux:
@@ -43,7 +43,7 @@ jobs:
       - run: sudo snap install flutter --classic
       - run: echo "$HOME/snap/flutter/common/flutter/.pub-cache/bin" >> $GITHUB_PATH
       - run: flutter doctor -v
-      - uses: bluefireteam/melos-action@v1
+      - uses: bluefireteam/melos-action@v2
       - run: flutter build linux -v
         working-directory: example
 
@@ -71,7 +71,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
-      - uses: bluefireteam/melos-action@v1
+      - uses: bluefireteam/melos-action@v2
       - run: melos test
 
   web:
@@ -79,7 +79,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
-      - uses: bluefireteam/melos-action@v1
+      - uses: bluefireteam/melos-action@v2
       - run: flutter doctor -v
       - run: flutter build web -v
         working-directory: example
