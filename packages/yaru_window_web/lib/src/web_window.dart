@@ -45,8 +45,15 @@ class YaruWebWindow extends YaruWindowPlatform {
   Future<void> setMaximizable(int id, bool maximizable) async {}
   @override
   Future<void> setClosable(int id, bool closable) async {}
+
   @override
-  Future<YaruWindowState> state(int id) async => const YaruWindowState();
+  Future<YaruWindowState> state(int id) async => const YaruWindowState(
+        isClosable: false,
+        isMovable: false,
+        isMaximizable: false,
+        isMinimizable: false,
+        isRestorable: false,
+      );
   @override
   Stream<YaruWindowState> states(int id) => const Stream.empty();
 
