@@ -23,6 +23,8 @@ flutter:
   plugin:
     implements: yaru_window
     platforms:
+      linux:
+        dartPluginClass: YaruWindowManager
       macos:
         dartPluginClass: YaruWindowManager
       windows:
