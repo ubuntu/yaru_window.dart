@@ -69,7 +69,14 @@ static gboolean window_delete_event_cb(GtkWidget* window, GdkEvent* /*event*/,
   g_autoptr(FlValue) args = fl_value_new_int(0);  // TODO
   fl_method_channel_invoke_method(channel, "onClose", args, nullptr,
                                   window_delete_response_cb, window);
-  return TRUE;
+  return true;
+}
+
+static gboolean window_enter_notify_cb(GtkWidget* window,
+                                       GdkEventCrossing event,
+                                       gpointer user_data) {
+  yaru_window_end_drag(GTK_WINDOW(window));
+  return false;
 }
 
 static void yaru_window_linux_plugin_listen_window(YaruWindowLinuxPlugin* self,
@@ -94,6 +101,9 @@ static void yaru_window_linux_plugin_listen_window(YaruWindowLinuxPlugin* self,
     g_signal_connect_object(G_OBJECT(window), "delete-event",
                             G_CALLBACK(window_delete_event_cb),
                             self->method_channel, GConnectFlags(0));
+    g_signal_connect_object(G_OBJECT(window), "enter-notify-event",
+                            G_CALLBACK(window_enter_notify_cb), nullptr,
+                            GConnectFlags(0));
     g_hash_table_insert(self->signals, GINT_TO_POINTER(window_id), 0);
   }
 }
@@ -122,11 +132,11 @@ static void yaru_window_linux_plugin_handle_method_call(
   GtkWindow* window = yaru_window_linux_plugin_get_window(self, window_id);
 
   if (strcmp(method, "init") == 0) {
-    // nothing to do
+    yaru_window_init(window);
   } else if (strcmp(method, "close") == 0) {
     gtk_window_close(window);
   } else if (strcmp(method, "drag") == 0) {
-    yaru_window_drag(window);
+    yaru_window_begin_drag(window);
   } else if (strcmp(method, "fullscreen") == 0) {
     gtk_window_fullscreen(window);
   } else if (strcmp(method, "hide") == 0) {

@@ -24,24 +24,48 @@ static gboolean is_header_bar(GtkWidget* widget) {
           g_str_has_suffix(G_OBJECT_TYPE_NAME(widget), "HeaderBar"));
 }
 
-// Recursively searches for a Gtk/HdyHeaderBar in the widget tree.
-static GtkWidget* find_header_bar(GtkWidget* widget) {
-  if (is_header_bar(widget)) {
+// Returns true if the widget is a GtkEventBox.
+static gboolean is_event_box(GtkWidget* widget) {
+  return widget != nullptr && GTK_IS_EVENT_BOX(widget);
+}
+
+// Recursively searches for a child in the widget tree.
+static GtkWidget* find_child(GtkWidget* widget,
+                             gboolean (*predicate)(GtkWidget*)) {
+  if (predicate(widget)) {
     return widget;
   }
 
   if (GTK_IS_CONTAINER(widget)) {
-    g_autoptr(GList) children =
-        gtk_container_get_children(GTK_CONTAINER(widget));
+    g_autoptr(GList) children = nullptr;
+    gtk_container_forall(
+        GTK_CONTAINER(widget),
+        [](GtkWidget* widget, gpointer client_data) {
+          GList** children = reinterpret_cast<GList**>(client_data);
+          *children = g_list_prepend(*children, widget);
+        },
+        &children);
     for (GList* l = children; l != nullptr; l = l->next) {
-      GtkWidget* header_bar = find_header_bar(GTK_WIDGET(l->data));
-      if (header_bar != nullptr) {
-        return header_bar;
+      GtkWidget* event_box = find_child(GTK_WIDGET(l->data), predicate);
+      if (event_box != nullptr) {
+        return event_box;
       }
     }
   }
 
   return nullptr;
+}
+
+static GtkWidget* find_header_bar(GtkWindow* window) {
+  GtkWidget* titlebar = gtk_window_get_titlebar(window);
+  if (!is_header_bar(titlebar)) {
+    titlebar = find_child(GTK_WIDGET(window), is_header_bar);
+  }
+  return titlebar;
+}
+
+void yaru_window_init(GtkWindow* window) {
+  // nothing to do
 }
 
 FlValue* yaru_window_get_state(GtkWindow* window) {
@@ -80,17 +104,40 @@ FlValue* yaru_window_get_state(GtkWindow* window) {
   return result;
 }
 
-void yaru_window_drag(GtkWindow* window) {
+void yaru_window_begin_drag(GtkWindow* window) {
   GdkPoint cursor = get_cursor_position(window);
+  g_object_set_data(G_OBJECT(window), "dragging", GINT_TO_POINTER(1));
   gtk_window_begin_move_drag(window, GDK_BUTTON_PRIMARY, cursor.x, cursor.y,
                              GDK_CURRENT_TIME);
 }
 
-const gchar* yaru_window_get_title(GtkWindow* window) {
-  GtkWidget* titlebar = gtk_window_get_titlebar(window);
-  if (!is_header_bar(titlebar)) {
-    titlebar = find_header_bar(GTK_WIDGET(window));
+void yaru_window_end_drag(GtkWindow* window) {
+  gpointer dragging = g_object_get_data(G_OBJECT(window), "dragging");
+  if (dragging == nullptr) {
+    return;
   }
+
+  GtkWidget* event_box = find_child(GTK_WIDGET(window), is_event_box);
+  if (event_box == nullptr) {
+    return;
+  }
+
+  GdkPoint cursor = get_cursor_position(window);
+  GdkPoint origin = get_window_origin(window);
+
+  g_autoptr(GdkEvent) event = gdk_event_new(GDK_BUTTON_RELEASE);
+  event->button.button = GDK_BUTTON_PRIMARY;
+  event->button.x = cursor.x - origin.x;
+  event->button.y = cursor.y - origin.y;
+  event->button.time = GDK_CURRENT_TIME;
+
+  gboolean result = false;
+  g_signal_emit_by_name(event_box, "button-release-event", event, &result);
+  g_object_set_data(G_OBJECT(window), "dragging", nullptr);
+}
+
+const gchar* yaru_window_get_title(GtkWindow* window) {
+  GtkWidget* titlebar = find_header_bar(window);
   if (titlebar != nullptr) {
     const gchar* title;
     g_object_get(titlebar, "title", &title, nullptr);
@@ -100,10 +147,7 @@ const gchar* yaru_window_get_title(GtkWindow* window) {
 }
 
 void yaru_window_set_title(GtkWindow* window, const gchar* title) {
-  GtkWidget* titlebar = gtk_window_get_titlebar(window);
-  if (!is_header_bar(titlebar)) {
-    titlebar = find_header_bar(GTK_WIDGET(window));
-  }
+  GtkWidget* titlebar = find_header_bar(window);
   if (titlebar != nullptr) {
     g_object_set(titlebar, "title", title, nullptr);
   } else {
@@ -112,20 +156,14 @@ void yaru_window_set_title(GtkWindow* window, const gchar* title) {
 }
 
 void yaru_window_hide_title(GtkWindow* window) {
-  GtkWidget* titlebar = gtk_window_get_titlebar(window);
-  if (!is_header_bar(titlebar)) {
-    titlebar = find_header_bar(GTK_WIDGET(window));
-  }
+  GtkWidget* titlebar = find_header_bar(window);
   if (titlebar != nullptr) {
     gtk_widget_hide(titlebar);
   }
 }
 
 void yaru_window_show_title(GtkWindow* window) {
-  GtkWidget* titlebar = gtk_window_get_titlebar(window);
-  if (!is_header_bar(titlebar)) {
-    titlebar = find_header_bar(GTK_WIDGET(window));
-  }
+  GtkWidget* titlebar = find_header_bar(window);
   if (titlebar != nullptr) {
     gtk_widget_show(titlebar);
   }
