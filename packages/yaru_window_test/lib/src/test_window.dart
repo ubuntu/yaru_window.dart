@@ -37,7 +37,8 @@ class YaruTestWindow extends YaruWindowPlatform {
 
   @override
   Future<void> close(int id) async {
-    for (final handler in _onCloseHandlers) {
+    while (_onCloseHandlers.isNotEmpty) {
+      final handler = _onCloseHandlers.removeAt(0);
       if (!await handler()) {
         break;
       }
