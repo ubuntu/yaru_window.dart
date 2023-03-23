@@ -2,30 +2,28 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
-import 'package:yaru_window/yaru_window.dart';
 import 'package:yaru_window_platform_interface/yaru_window_platform_interface.dart';
 
 @visibleForTesting
 class YaruTestWindow extends YaruWindowPlatform {
-  static Future<YaruWindowInstance> ensureInitialized() async {
-    return YaruWindow.ensureInitialized().then((window) {
-      _platform ??= YaruWindowPlatform.instance;
-      if (YaruWindowPlatform.instance is! YaruTestWindow) {
-        YaruWindowPlatform.instance = YaruTestWindow();
-      }
-      return window;
-    });
+  static Future<void> ensureInitialized() async {
+    _platform ??= YaruWindowPlatform.instance;
+    if (YaruWindowPlatform.instance is! YaruTestWindow) {
+      YaruWindowPlatform.instance = YaruTestWindow();
+    }
   }
 
   static Future<void> waitForClosed() async {
+    final window = YaruWindowPlatform.instance;
+    assert(window is YaruTestWindow, 'Call YaruTestWindow.ensureInitialized');
+    return (window as YaruTestWindow)._waitForClosed();
+  }
+
+  Future<void> _waitForClosed() async {
     final completer = Completer();
-    await YaruTestWindow.ensureInitialized().then((window) {
-      return window.onClose(() {
-        if (!completer.isCompleted) {
-          completer.complete();
-        }
-        return true;
-      });
+    _onCloseHandlers.add(() {
+      completer.complete();
+      return true;
     });
     return completer.future;
   }
