@@ -6,7 +6,8 @@ import 'package:yaru_window_platform_interface/yaru_window_platform_interface.da
 
 @visibleForTesting
 class YaruTestWindow extends YaruWindowPlatform {
-  static Future<void> ensureInitialized() async {
+  static Future<void> ensureInitialized({YaruWindowState? state}) async {
+    _state = state;
     _platform ??= YaruWindowPlatform.instance;
     if (YaruWindowPlatform.instance is! YaruTestWindow) {
       YaruWindowPlatform.instance = YaruTestWindow();
@@ -28,6 +29,7 @@ class YaruTestWindow extends YaruWindowPlatform {
     return completer.future;
   }
 
+  static YaruWindowState? _state;
   static YaruWindowPlatform? _platform;
 
   @override
@@ -91,12 +93,16 @@ class YaruTestWindow extends YaruWindowPlatform {
 
   @override
   Future<YaruWindowState> state(int id) async {
-    return _platform?.state(id) ?? Future.value(const YaruWindowState());
+    return _state != null
+        ? Future.value(_state)
+        : _platform?.state(id) ?? Future.value(const YaruWindowState());
   }
 
   @override
   Stream<YaruWindowState> states(int id) {
-    return _platform?.states(id) ?? const Stream.empty();
+    return _state != null
+        ? Stream.value(_state!)
+        : _platform?.states(id) ?? const Stream.empty();
   }
 
   @override
