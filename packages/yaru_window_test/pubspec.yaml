@@ -2,7 +2,7 @@ name: yaru_window_test
 description: An implementation of yaru_window suitable for testing.
 repository: https://github.com/ubuntu-flutter-community/yaru_window.dart
 issue_tracker: https://github.com/ubuntu-flutter-community/yaru_window.dart/issues
-version: 0.0.3
+version: 0.0.4
 
 environment:
   sdk: '>=2.19.0 <3.0.0'

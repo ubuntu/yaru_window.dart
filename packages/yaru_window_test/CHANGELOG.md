@@ -1,3 +1,7 @@
+## 0.0.4
+
+- YaruTestWindow: allow passing deterministic window state (#20)
+
 ## 0.0.3
 
 - Make YaruTestWindow compatible with widget tests (#19)
