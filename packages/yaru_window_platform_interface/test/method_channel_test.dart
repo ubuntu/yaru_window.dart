@@ -7,9 +7,12 @@ import 'state_test.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  final messenger =
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+
   test('init', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'init');
       expect(call.arguments, [123]);
       return null;
@@ -19,7 +22,7 @@ void main() {
 
   test('close', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'close');
       expect(call.arguments, [123]);
       return null;
@@ -29,7 +32,7 @@ void main() {
 
   test('drag', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'drag');
       expect(call.arguments, [123]);
       return null;
@@ -39,7 +42,7 @@ void main() {
 
   test('fullscreen', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'fullscreen');
       expect(call.arguments, [123]);
       return null;
@@ -49,7 +52,7 @@ void main() {
 
   test('hide', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'hide');
       expect(call.arguments, [123]);
       return null;
@@ -59,7 +62,7 @@ void main() {
 
   test('hideTitle', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'hideTitle');
       expect(call.arguments, [123]);
       return null;
@@ -69,7 +72,7 @@ void main() {
 
   test('maximize', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'maximize');
       expect(call.arguments, [123]);
       return null;
@@ -79,7 +82,7 @@ void main() {
 
   test('minimize', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'minimize');
       expect(call.arguments, [123]);
       return null;
@@ -89,7 +92,7 @@ void main() {
 
   test('restore', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'restore');
       expect(call.arguments, [123]);
       return null;
@@ -99,7 +102,7 @@ void main() {
 
   test('show', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'show');
       expect(call.arguments, [123]);
       return null;
@@ -109,7 +112,7 @@ void main() {
 
   test('showMenu', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'showMenu');
       expect(call.arguments, [123]);
       return null;
@@ -119,7 +122,7 @@ void main() {
 
   test('showTitle', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'showTitle');
       expect(call.arguments, [123]);
       return null;
@@ -129,7 +132,7 @@ void main() {
 
   test('setBackground', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'setBackground');
       expect(call.arguments, [123, 0x11223344]);
       return null;
@@ -139,7 +142,7 @@ void main() {
 
   test('setBrightness', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'setBrightness');
       expect(call.arguments, [123, 'dark']);
       return null;
@@ -149,7 +152,7 @@ void main() {
 
   test('setTitle', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'setTitle');
       expect(call.arguments, [123, 'foo bar']);
       return null;
@@ -159,7 +162,7 @@ void main() {
 
   test('setMinimizable', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'setMinimizable');
       expect(call.arguments, [123, true]);
       return null;
@@ -169,7 +172,7 @@ void main() {
 
   test('setMaximizable', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'setMaximizable');
       expect(call.arguments, [123, true]);
       return null;
@@ -179,7 +182,7 @@ void main() {
 
   test('setClosable', () async {
     final instance = YaruWindowMethodChannel();
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'setClosable');
       expect(call.arguments, [123, true]);
       return null;
@@ -190,7 +193,7 @@ void main() {
   test('state', () async {
     final instance = YaruWindowMethodChannel();
 
-    instance.channel.setMockMethodCallHandler((call) async {
+    messenger.setMockMethodCallHandler(instance.channel, (call) async {
       expect(call.method, 'state');
       expect(call.arguments, [123]);
       return testState.toJson();
@@ -204,8 +207,6 @@ void main() {
 
     const codec = StandardMethodCodec();
     final channel = instance.events.name;
-    final messenger =
-        TestDefaultBinaryMessengerBinding.instance!.defaultBinaryMessenger;
 
     Future<void> emitEvent(Object? event) {
       return messenger.handlePlatformMessage(
@@ -240,8 +241,6 @@ void main() {
 
     const codec = StandardMethodCodec();
     final channel = instance.channel.name;
-    final messenger =
-        TestDefaultBinaryMessengerBinding.instance!.defaultBinaryMessenger;
 
     Future<void> receiveMethodCall(String method, [dynamic arguments]) {
       return messenger.handlePlatformMessage(

@@ -36,10 +36,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.transparent,
       body: Row(
-        children: const [
+        children: [
           Expanded(child: ColorSelector()),
           Expanded(child: StateView()),
         ],
