@@ -17,8 +17,6 @@ jobs:
           channel: 'stable'
           flutter-version: '3.7.x'
       - uses: bluefireteam/melos-action@v2
-        with:
-          melos-version: '2.9.0'
       - run: melos analyze
 
   coverage:
@@ -30,8 +28,6 @@ jobs:
           channel: 'stable'
           flutter-version: '3.7.x'
       - uses: bluefireteam/melos-action@v2
-        with:
-          melos-version: '2.9.0'
       - run: sudo apt update
       - run: sudo apt install -y lcov
       - run: melos coverage
@@ -48,8 +44,6 @@ jobs:
           channel: 'stable'
           flutter-version: '3.7.x'
       - uses: bluefireteam/melos-action@v2
-        with:
-          melos-version: '2.9.0'
       - run: melos format
 
   linux:
@@ -100,7 +94,7 @@ jobs:
         with:
           channel: 'stable'
           flutter-version: '3.7.x'
-      - run: dart pub global activate melos 2.9.0
+      - run: dart pub global activate melos
       - run: melos exec -c 1 --no-private -- dart pub publish --dry-run
 
   test:
@@ -112,8 +106,6 @@ jobs:
           channel: 'stable'
           flutter-version: '3.7.x'
       - uses: bluefireteam/melos-action@v2
-        with:
-          melos-version: '2.9.0'
       - run: melos test
 
   web:
@@ -125,8 +117,6 @@ jobs:
           channel: 'stable'
           flutter-version: '3.7.x'
       - uses: bluefireteam/melos-action@v2
-        with:
-          melos-version: '2.9.0'
       - run: flutter pub get
         working-directory: example
       - run: flutter build web -v
