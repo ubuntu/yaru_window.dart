@@ -15,7 +15,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.7.x'
+          flutter-version: '3.10.x'
       - uses: bluefireteam/melos-action@v2
       - run: melos analyze
 
@@ -26,7 +26,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.7.x'
+          flutter-version: '3.10.x'
       - uses: bluefireteam/melos-action@v2
       - run: sudo apt update
       - run: sudo apt install -y lcov
@@ -42,7 +42,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.7.x'
+          flutter-version: '3.10.x'
       - uses: bluefireteam/melos-action@v2
       - run: melos format
 
@@ -56,7 +56,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.7.x'
+          flutter-version: '3.10.x'
       - uses: bluefireteam/melos-action@v2
       - run: sudo apt update
       - run: sudo apt install -y clang cmake curl libgtk-3-dev ninja-build pkg-config unzip xvfb
@@ -75,7 +75,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.7.x'
+          flutter-version: '3.10.x'
       - uses: bluefireteam/melos-action@v2
       - run: flutter build macos -v
         working-directory: example
@@ -91,7 +91,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.7.x'
+          flutter-version: '3.10.x'
       - run: dart pub global activate melos
       - run: melos exec -c 1 --no-private -- dart pub publish --dry-run
 
@@ -102,7 +102,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.7.x'
+          flutter-version: '3.10.x'
       - uses: bluefireteam/melos-action@v2
       - run: melos test
 
@@ -113,7 +113,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.7.x'
+          flutter-version: '3.10.x'
       - uses: bluefireteam/melos-action@v2
       - run: flutter build web -v
         working-directory: example
@@ -125,7 +125,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.7.x'
+          flutter-version: '3.10.x'
       - uses: bluefireteam/melos-action@v2
       - run: flutter build windows -v
         working-directory: example
