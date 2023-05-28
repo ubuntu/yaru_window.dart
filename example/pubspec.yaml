@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   handy_window: ^0.3.0
-  yaru: ^0.7.0
+  yaru: ^0.8.0
   yaru_window:
     path: ../
 
