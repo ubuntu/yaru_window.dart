@@ -188,6 +188,48 @@ void main() {
       ),
     );
   });
+
+  test('calls close handlers', () async {
+    // Wiring the window manager mock such that:
+    final wm = MockWindowManager();
+    when(wm.ensureInitialized).thenAnswer((_) async {});
+    // 1. It invokes the on close listener
+    WindowListener? listener;
+    when(() => wm.addListener(any())).thenAnswer(
+      (realInvocation) async =>
+          listener = realInvocation.positionalArguments[0] as WindowListener,
+    );
+    // 2. It simulates a window close (by disconnecting listeners to avoid infinite loop)
+    var isPreventClose = false;
+    when(wm.close).thenAnswer((_) async {
+      listener?.onWindowClose();
+      if (!isPreventClose) {
+        listener = null; // simulates a closing app.
+      }
+    });
+    // 3. Takes into consideration calls to setPreventClose.
+    when(() => wm.setPreventClose(any())).thenAnswer((realInvocation) async {
+      isPreventClose = realInvocation.positionalArguments[0] as bool;
+    });
+
+    YaruWindowPlatform.instance = YaruWindowManager(wm);
+
+    // Before PR#31 this wouldn't be called.
+    var onCloseCalled = false;
+    await YaruWindowPlatform.instance.onClose(0, () {
+      debugPrint('Quitting');
+      onCloseCalled = true;
+      return true;
+    });
+
+    // Subscribing to the close event prevents closing at first.
+    expect(isPreventClose, true);
+
+    await YaruWindowPlatform.instance.close(0);
+    // Yet, close handlers installed must be called.
+    expect(onCloseCalled, true, reason: 'Close handlers never called.');
+    expect(isPreventClose, false);
+  });
 }
 
 class FakeWindowListener extends Fake implements WindowListener {}
