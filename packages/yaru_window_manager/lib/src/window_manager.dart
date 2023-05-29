@@ -12,8 +12,13 @@ class YaruWindowManager extends YaruWindowPlatform {
     YaruWindowPlatform.instance = YaruWindowManager();
   }
 
-  _YaruWindowListener? __listener;
-  _YaruWindowListener get _listener => __listener ??= _YaruWindowListener(_wm);
+  _YaruWindowStatesListener? __statesListener;
+  _YaruWindowStatesListener get _listener =>
+      __statesListener ??= _YaruWindowStatesListener(_wm);
+
+  _YaruWindowOnCloseListener? __closeListener;
+  _YaruWindowOnCloseListener get _closeListener =>
+      __closeListener ??= _YaruWindowOnCloseListener(_wm);
 
   WindowManager? __wm;
   WindowManager get _wm => __wm ??= WindowManager.instance;
@@ -88,7 +93,7 @@ class YaruWindowManager extends YaruWindowPlatform {
 
   @override
   Future<void> onClose(int id, FutureOr<bool> Function() handler) {
-    return _listener.addCloseHandler(handler);
+    return _closeListener.addCloseHandler(handler);
   }
 }
 
@@ -159,8 +164,8 @@ extension _YaruWindowManagerX on WindowManager {
   }
 }
 
-class _YaruWindowListener extends WindowListener {
-  _YaruWindowListener(this._wm);
+class _YaruWindowStatesListener extends WindowListener {
+  _YaruWindowStatesListener(this._wm);
 
   final WindowManager _wm;
   StreamController<YaruWindowState>? _controller;
@@ -195,6 +200,15 @@ class _YaruWindowListener extends WindowListener {
   void onWindowMinimize() => _updateState();
   @override
   void onWindowRestore() => _updateState();
+}
+
+class _YaruWindowOnCloseListener extends WindowListener {
+  _YaruWindowOnCloseListener(this._wm) {
+    _wm.addListener(this);
+  }
+
+  final WindowManager _wm;
+
   @override
   void onWindowClose() => _handleClose();
 
