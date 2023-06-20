@@ -96,10 +96,6 @@ void main() {
       () => YaruWindowPlatform.instance.states(0),
       throwsUnimplementedError('states'),
     );
-    await expectLater(
-      () => YaruWindowPlatform.instance.onClose(0, () => false),
-      throwsUnimplementedError('onClose'),
-    );
   });
 }
 

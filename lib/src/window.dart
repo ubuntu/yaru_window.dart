@@ -217,7 +217,18 @@ class YaruWindowInstance {
   }
 
   /// Installs a close handler for the window.
-  Future<void> onClose(FutureOr<bool> Function() handler) {
-    return _platform.onClose(_id, handler);
+  Future<void> onClose(FutureOr<bool> Function() handler) async {
+    WidgetsBinding.instance.addObserver(_YaruWindowObserver(handler));
+  }
+}
+
+class _YaruWindowObserver with WidgetsBindingObserver {
+  _YaruWindowObserver(this.handler);
+
+  final FutureOr<bool> Function() handler;
+
+  @override
+  Future<AppExitResponse> didRequestAppExit() async {
+    return await handler() ? AppExitResponse.exit : AppExitResponse.cancel;
   }
 }

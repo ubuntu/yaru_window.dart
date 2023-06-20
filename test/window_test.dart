@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -46,7 +48,6 @@ void main() {
     when(() => platform.setClosable(any(), any())).thenAnswer((_) async {});
     when(() => platform.state(any())).thenAnswer((_) async => state);
     when(() => platform.states(any())).thenAnswer((_) => Stream.value(change));
-    when(() => platform.onClose(any(), any())).thenAnswer((_) async {});
 
     YaruWindowPlatform.instance = platform;
 
@@ -116,9 +117,25 @@ void main() {
         YaruWindow.states(context), emitsInOrder([state, change]));
     verify(() => platform.state(0)).called(1);
     verify(() => platform.states(0)).called(1);
+  });
 
-    await YaruWindow.onClose(context, () => true);
-    verify(() => platform.onClose(0, any())).called(1);
+  testWidgets('on close', (tester) async {
+    final platform = MockYaruWindowPlatform();
+    when(() => platform.init(any())).thenAnswer((_) async {});
+    YaruWindowPlatform.instance = platform;
+
+    final window = await YaruWindow.ensureInitialized();
+
+    var wasCalled = 0;
+    await window.onClose(() => ++wasCalled > 1);
+
+    expect(await WidgetsBinding.instance.handleRequestAppExit(),
+        AppExitResponse.cancel);
+    expect(wasCalled, 1);
+
+    expect(await WidgetsBinding.instance.handleRequestAppExit(),
+        AppExitResponse.exit);
+    expect(wasCalled, 2);
   });
 }
 

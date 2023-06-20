@@ -94,9 +94,4 @@ abstract class YaruWindowPlatform extends PlatformInterface {
 
   /// Returns a stream of states of the window with the given [id].
   Stream<YaruWindowState> states(int id) => throw UnimplementedError('states');
-
-  /// Installs a close handler for the window with the given [id].
-  Future<void> onClose(int id, FutureOr<bool> Function() handler) {
-    throw UnimplementedError('onClose');
-  }
 }

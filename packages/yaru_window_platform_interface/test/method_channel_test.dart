@@ -235,28 +235,4 @@ void main() {
     event['type'] = 'state';
     await emitEvent(event);
   });
-
-  test('onClose', () async {
-    final instance = YaruWindowMethodChannel();
-
-    const codec = StandardMethodCodec();
-    final channel = instance.channel.name;
-
-    Future<void> receiveMethodCall(String method, [dynamic arguments]) {
-      return messenger.handlePlatformMessage(
-        channel,
-        codec.encodeMethodCall(MethodCall(method, arguments)),
-        (_) {},
-      );
-    }
-
-    var wasConfirmed = false;
-    await instance.onClose(123, () {
-      wasConfirmed = true;
-      return true;
-    });
-
-    await receiveMethodCall('onClose', 123);
-    expect(wasConfirmed, true);
-  });
 }

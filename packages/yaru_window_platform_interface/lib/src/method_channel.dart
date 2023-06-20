@@ -7,10 +7,6 @@ import 'platform_interface.dart';
 import 'state.dart';
 
 class YaruWindowMethodChannel extends YaruWindowPlatform {
-  YaruWindowMethodChannel() {
-    channel.setMethodCallHandler(_handleMethodCall);
-  }
-
   @visibleForTesting
   final channel = const MethodChannel('yaru_window');
 
@@ -85,26 +81,5 @@ class YaruWindowMethodChannel extends YaruWindowPlatform {
     return _events!
         .where((event) => event['id'] == id && event['type'] == type)
         .map((event) => event.cast<String, dynamic>());
-  }
-
-  @override
-  Future<void> onClose(int id, FutureOr<bool> Function() handler) async {
-    _onCloseHandlers.add(handler);
-  }
-
-  final _onCloseHandlers = <FutureOr<bool> Function()>[];
-
-  Future<dynamic> _handleMethodCall(MethodCall call) async {
-    switch (call.method) {
-      case 'onClose':
-        for (final handler in _onCloseHandlers) {
-          if (!await handler()) {
-            return false;
-          }
-        }
-        return true;
-      default:
-        throw UnimplementedError('Unimplemented method ${call.method}');
-    }
   }
 }
