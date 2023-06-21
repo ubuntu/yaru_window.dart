@@ -1,3 +1,7 @@
+## 0.1.3
+
+- Remove `delete-event` handler in favor of `didRequestAppExit()` (#35)
+
 ## 0.1.2
 
 - Migrate to Flutter 3.10 and Dart 3.0.
