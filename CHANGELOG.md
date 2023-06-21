@@ -1,3 +1,8 @@
+
+## 0.1.3
+
+- Bump platform interface & linux versions.
+
 ## 0.1.2
 
 - Migrate to Flutter 3.10 and Dart 3.0.
