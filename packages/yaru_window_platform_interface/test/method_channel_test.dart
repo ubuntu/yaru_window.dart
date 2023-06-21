@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yaru_window_platform_interface/src/method_channel.dart';
 
@@ -236,27 +239,18 @@ void main() {
     await emitEvent(event);
   });
 
-  test('onClose', () async {
+  testWidgets('onClose', (tester) async {
     final instance = YaruWindowMethodChannel();
 
-    const codec = StandardMethodCodec();
-    final channel = instance.channel.name;
+    var wasCalled = 0;
+    await instance.onClose(0, () => ++wasCalled > 1);
 
-    Future<void> receiveMethodCall(String method, [dynamic arguments]) {
-      return messenger.handlePlatformMessage(
-        channel,
-        codec.encodeMethodCall(MethodCall(method, arguments)),
-        (_) {},
-      );
-    }
+    expect(await WidgetsBinding.instance.handleRequestAppExit(),
+        AppExitResponse.cancel);
+    expect(wasCalled, 1);
 
-    var wasConfirmed = false;
-    await instance.onClose(123, () {
-      wasConfirmed = true;
-      return true;
-    });
-
-    await receiveMethodCall('onClose', 123);
-    expect(wasConfirmed, true);
+    expect(await WidgetsBinding.instance.handleRequestAppExit(),
+        AppExitResponse.exit);
+    expect(wasCalled, 2);
   });
 }
