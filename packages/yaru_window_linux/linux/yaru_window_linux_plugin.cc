@@ -37,41 +37,6 @@ static void window_property_cb(GtkWindow* window, GParamSpec*,
   fl_event_channel_send(channel, state, nullptr, nullptr);
 }
 
-static gboolean window_delete_event_cb(GtkWidget* window, GdkEvent* /*event*/,
-                                       gpointer user_data);
-
-static void window_delete_response_cb(GObject* object, GAsyncResult* result,
-                                      gpointer user_data) {
-  FlMethodChannel* channel = FL_METHOD_CHANNEL(object);
-  g_autoptr(GError) error = nullptr;
-  g_autoptr(FlMethodResponse) response =
-      fl_method_channel_invoke_method_finish(channel, result, &error);
-  if (!response) {
-    g_warning("onClose response: %s", error->message);
-    return;
-  }
-
-  FlValue* value = fl_method_response_get_result(response, &error);
-  if (value && fl_value_get_type(value) == FL_VALUE_TYPE_BOOL &&
-      !fl_value_get_bool(value)) {
-    return;
-  }
-
-  GtkWindow* window = GTK_WINDOW(user_data);
-  g_signal_handlers_disconnect_by_func(window, gpointer(window_delete_event_cb),
-                                       channel);
-  gtk_window_close(GTK_WINDOW(window));
-}
-
-static gboolean window_delete_event_cb(GtkWidget* window, GdkEvent* /*event*/,
-                                       gpointer user_data) {
-  FlMethodChannel* channel = FL_METHOD_CHANNEL(user_data);
-  g_autoptr(FlValue) args = fl_value_new_int(0);  // TODO
-  fl_method_channel_invoke_method(channel, "onClose", args, nullptr,
-                                  window_delete_response_cb, window);
-  return true;
-}
-
 static gboolean window_enter_notify_cb(GtkWidget* window,
                                        GdkEventCrossing event,
                                        gpointer user_data) {
@@ -98,9 +63,6 @@ static void yaru_window_linux_plugin_listen_window(YaruWindowLinuxPlugin* self,
     g_signal_connect_object(G_OBJECT(window), "notify::type-hint",
                             G_CALLBACK(window_property_cb), self->event_channel,
                             GConnectFlags(0));
-    g_signal_connect_object(G_OBJECT(window), "delete-event",
-                            G_CALLBACK(window_delete_event_cb),
-                            self->method_channel, GConnectFlags(0));
     g_signal_connect_object(G_OBJECT(window), "enter-notify-event",
                             G_CALLBACK(window_enter_notify_cb), nullptr,
                             GConnectFlags(0));
@@ -116,8 +78,6 @@ static void yaru_window_linux_plugin_unlisten_window(
                                          self->event_channel);
     g_signal_handlers_disconnect_by_func(window, gpointer(window_property_cb),
                                          self->event_channel);
-    g_signal_handlers_disconnect_by_func(
-        window, gpointer(window_delete_event_cb), self->method_channel);
     g_hash_table_remove(self->signals, GINT_TO_POINTER(window_id));
   }
 }

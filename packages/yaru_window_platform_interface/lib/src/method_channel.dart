@@ -1,16 +1,13 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/services.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/widgets.dart';
 
 import 'platform_interface.dart';
 import 'state.dart';
 
 class YaruWindowMethodChannel extends YaruWindowPlatform {
-  YaruWindowMethodChannel() {
-    channel.setMethodCallHandler(_handleMethodCall);
-  }
-
   @visibleForTesting
   final channel = const MethodChannel('yaru_window');
 
@@ -89,22 +86,17 @@ class YaruWindowMethodChannel extends YaruWindowPlatform {
 
   @override
   Future<void> onClose(int id, FutureOr<bool> Function() handler) async {
-    _onCloseHandlers.add(handler);
+    WidgetsBinding.instance.addObserver(_YaruWindowObserver(handler));
   }
+}
 
-  final _onCloseHandlers = <FutureOr<bool> Function()>[];
+class _YaruWindowObserver with WidgetsBindingObserver {
+  _YaruWindowObserver(this.handler);
 
-  Future<dynamic> _handleMethodCall(MethodCall call) async {
-    switch (call.method) {
-      case 'onClose':
-        for (final handler in _onCloseHandlers) {
-          if (!await handler()) {
-            return false;
-          }
-        }
-        return true;
-      default:
-        throw UnimplementedError('Unimplemented method ${call.method}');
-    }
+  final FutureOr<bool> Function() handler;
+
+  @override
+  Future<AppExitResponse> didRequestAppExit() async {
+    return await handler() ? AppExitResponse.exit : AppExitResponse.cancel;
   }
 }
