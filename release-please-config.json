@@ -1,0 +1,33 @@
+{
+  "$schema": "https://github.com/googleapis/release-please/raw/main/schemas/config.json",
+  "release-type": "dart",
+  "separate-pull-requests": true,
+  "pull-request-title-pattern": "chore: release${component} v${version}",
+  "changelog-sections": [
+    {
+      "type": "feat",
+      "section": ""
+    },
+    {
+      "type": "fix",
+      "section": ""
+    }
+  ],
+  "packages": {
+    "/": {
+      "monorepo-tags": true
+    },
+    "packages/yaru_window_linux": {
+      "monorepo-tags": true
+    },
+    "packages/yaru_window_manager": {
+      "monorepo-tags": true
+    },
+    "packages/yaru_window_platform_interface": {
+      "monorepo-tags": true
+    },
+    "packages/yaru_window_web": {
+      "monorepo-tags": true
+    }
+  }
+}
