@@ -14,7 +14,7 @@
     }
   ],
   "packages": {
-    "/": {
+    ".": {
       "monorepo-tags": true
     },
     "packages/yaru_window_linux": {

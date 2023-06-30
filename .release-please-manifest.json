@@ -1,5 +1,5 @@
 {
-  "/": "0.1.3",
+  ".": "0.1.3",
   "packages/yaru_window_linux": "0.1.3",
   "packages/yaru_window_manager": "0.1.2",
   "packages/yaru_window_platform_interface": "0.1.2",
