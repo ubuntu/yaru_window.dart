@@ -150,9 +150,8 @@ void yaru_window_set_title(GtkWindow* window, const gchar* title) {
   GtkWidget* titlebar = find_header_bar(window);
   if (titlebar != nullptr) {
     g_object_set(titlebar, "title", title, nullptr);
-  } else {
-    gtk_window_set_title(window, title);
   }
+  gtk_window_set_title(window, title);
 }
 
 void yaru_window_hide_title(GtkWindow* window) {
