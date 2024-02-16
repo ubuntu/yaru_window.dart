@@ -1,3 +1,7 @@
+## [0.2.1](https://github.com/ubuntu/yaru_window.dart/compare/yaru_window-v0.2.0...yaru_window-v0.2.1) (2024-02-16)
+
+* update yaru window linux dep by @Feichtmeier in https://github.com/ubuntu/yaru_window.dart/pull/45
+
 ## [0.2.0](https://github.com/ubuntu/yaru_window.dart/compare/yaru_window-v0.1.3...yaru_window-v0.2.0) (2023-12-15)
 
 
