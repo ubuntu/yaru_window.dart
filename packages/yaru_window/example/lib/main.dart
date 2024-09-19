@@ -235,7 +235,7 @@ class _ColorSelectorState extends State<ColorSelector> {
 
   @override
   Widget build(BuildContext context) {
-    _color ??= Theme.of(context).colorScheme.background;
+    _color ??= Theme.of(context).colorScheme.surface;
     return Column(
       children: [
         const Spacer(),
