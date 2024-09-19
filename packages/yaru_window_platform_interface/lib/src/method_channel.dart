@@ -76,9 +76,9 @@ class YaruWindowMethodChannel extends YaruWindowPlatform {
         .then((v) => v!);
   }
 
-  Stream<Map<String, dynamic>>? _events;
+  Stream<Map<Object?, Object?>>? _events;
   Stream<Map<String, dynamic>> _receiveEvents(int id, String type) {
-    _events ??= events.receiveBroadcastStream().cast<Map<String, dynamic>>();
+    _events ??= events.receiveBroadcastStream().cast<Map<Object?, Object?>>();
     return _events!
         .where((event) => event['id'] == id && event['type'] == type)
         .map((event) => event.cast<String, dynamic>());
