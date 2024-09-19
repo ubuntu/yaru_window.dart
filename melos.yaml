@@ -1,9 +1,7 @@
 name: yaru_window
 
 packages:
-  - .
   - packages/**
-  - example
 
 ignore:
   - synthetic_package

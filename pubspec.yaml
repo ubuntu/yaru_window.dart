@@ -1,37 +1,8 @@
-name: yaru_window
-description: Provides API for interacting with top-level windows.
-repository: https://github.com/ubuntu/yaru_window.dart
-issue_tracker: https://github.com/ubuntu/yaru_window.dart/issues
-version: 0.2.1
+name: yaru_window_workspace
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
-  flutter: '>=3.10.0'
-
-dependencies:
-  flutter:
-    sdk: flutter
-  yaru_window_linux: ^0.2.0
-  yaru_window_manager: ^0.1.1
-  yaru_window_platform_interface: ^0.1.2
-  yaru_window_web: ^0.0.3
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
-  flutter_test:
-    sdk: flutter
-  melos: ^3.0.0
-  mocktail: ^0.3.0
-  plugin_platform_interface: ^2.1.3
+  melos: ^6.1.0
 
-flutter:
-  plugin:
-    platforms:
-      linux:
-        default_package: yaru_window_linux
-      macos:
-        default_package: yaru_window_manager
-      web:
-        default_package: yaru_window_web
-      windows:
-        default_package: yaru_window_manager
