@@ -21,17 +21,17 @@ class YaruWindowState {
   /// Creates a new [YaruWindowState] from a JSON object.
   factory YaruWindowState.fromJson(Map<String, dynamic> json) {
     return YaruWindowState(
-      isActive: json['active'],
-      isClosable: json['closable'],
-      isFullscreen: json['fullscreen'],
-      isMaximizable: json['maximizable'],
-      isMaximized: json['maximized'],
-      isMinimizable: json['minimizable'],
-      isMinimized: json['minimized'],
-      isMovable: json['movable'],
-      isRestorable: json['restorable'],
-      title: json['title'],
-      isVisible: json['visible'],
+      isActive: json['active'] as bool?,
+      isClosable: json['closable'] as bool?,
+      isFullscreen: json['fullscreen'] as bool?,
+      isMaximizable: json['maximizable'] as bool?,
+      isMaximized: json['maximized'] as bool?,
+      isMinimizable: json['minimizable'] as bool?,
+      isMinimized: json['minimized'] as bool?,
+      isMovable: json['movable'] as bool?,
+      isRestorable: json['restorable'] as bool?,
+      title: json['title'] as String?,
+      isVisible: json['visible'] as bool?,
     );
   }
 

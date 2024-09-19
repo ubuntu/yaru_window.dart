@@ -3,8 +3,8 @@ import 'dart:ui';
 
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'method_channel.dart';
-import 'state.dart';
+import 'package:yaru_window_platform_interface/src/method_channel.dart';
+import 'package:yaru_window_platform_interface/src/state.dart';
 
 /// A common platform interface for `yaru_window`.
 abstract class YaruWindowPlatform extends PlatformInterface {
