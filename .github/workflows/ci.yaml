@@ -10,7 +10,6 @@ on:
 jobs:
   analyze:
     runs-on: ubuntu-22.04
-    needs: setup
     steps:
       - uses: actions/checkout@v3
       - uses: Atsumi3/actions-setup-fvm@0.0.3
