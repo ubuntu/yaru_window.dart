@@ -274,15 +274,24 @@ Matcher isWindowState({
   }
   if (isFullscreen != null) {
     matcher = matcher.having(
-        (s) => s.isFullscreen, 'isFullscreen', equals(isFullscreen),);
+      (s) => s.isFullscreen,
+      'isFullscreen',
+      equals(isFullscreen),
+    );
   }
   if (isMaximized != null) {
     matcher = matcher.having(
-        (s) => s.isMaximized, 'isMaximized', equals(isMaximized),);
+      (s) => s.isMaximized,
+      'isMaximized',
+      equals(isMaximized),
+    );
   }
   if (isMinimized != null) {
     matcher = matcher.having(
-        (s) => s.isMinimized, 'isMinimized', equals(isMinimized),);
+      (s) => s.isMinimized,
+      'isMinimized',
+      equals(isMinimized),
+    );
   }
   return matcher;
 }

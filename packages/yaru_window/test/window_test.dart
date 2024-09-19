@@ -113,7 +113,9 @@ void main() {
     verify(() => platform.state(0)).called(1);
 
     await expectLater(
-        YaruWindow.states(context), emitsInOrder([state, change]),);
+      YaruWindow.states(context),
+      emitsInOrder([state, change]),
+    );
     verify(() => platform.state(0)).called(1);
     verify(() => platform.states(0)).called(1);
 
