@@ -1,4 +1,5 @@
 name: yaru_window
+sdkPath: .fvm/flutter_sdk
 
 packages:
   - packages/**
@@ -29,7 +30,7 @@ scripts:
       lcov --remove coverage/lcov.info '**/*.g.dart' -o coverage/lcov.info
 
   # format all packages
-  format: >
+  format:exclude: >
     find . -name '*.dart' \
       ! -name '*.g.dart' \
       ! -path '*/.*/*' \
