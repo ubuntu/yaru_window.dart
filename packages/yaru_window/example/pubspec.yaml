@@ -21,5 +21,9 @@ dev_dependencies:
     sdk: flutter
   ubuntu_lints: ^0.4.0
 
+dependency_overrides:
+  yaru_window:
+    path: ../
+
 flutter:
   uses-material-design: true
