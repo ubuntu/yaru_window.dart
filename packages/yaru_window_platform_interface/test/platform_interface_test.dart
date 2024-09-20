@@ -110,4 +110,5 @@ class MockYaruWindowPlatform
 class FakeYaruWindowPlatform extends YaruWindowPlatform {}
 
 Matcher throwsUnimplementedError(String method) => throwsA(
-    isA<UnimplementedError>().having((e) => e.message, 'method', method));
+      isA<UnimplementedError>().having((e) => e.message, 'method', method),
+    );

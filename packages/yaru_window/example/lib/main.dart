@@ -1,7 +1,6 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:yaru/yaru.dart';
-import 'package:yaru_window/yaru_window.dart';
 
 Future<void> main() async {
   await YaruWindow.ensureInitialized();
@@ -110,7 +109,7 @@ class StateView extends StatelessWidget {
               title: const Text('Closable'),
               subtitle: Text('${state?.isClosable}'),
               trailing: ElevatedButton(
-                onPressed: state?.isClosable == true ? window.close : null,
+                onPressed: (state?.isClosable ?? false) ? window.close : null,
                 child: const Text('Close'),
               ),
             ),
@@ -125,21 +124,23 @@ class StateView extends StatelessWidget {
             ),
             ListTile(
               title: Text(
-                  'Maximizable ${state?.isMaximized == true ? '(maximized)' : ''}'),
+                'Maximizable ${(state?.isMaximized ?? false) ? '(maximized)' : ''}',
+              ),
               subtitle: Text('${state?.isMaximizable}'),
               trailing: ElevatedButton(
                 onPressed:
-                    state?.isMaximizable == true ? window.maximize : null,
+                    (state?.isMaximizable ?? false) ? window.maximize : null,
                 child: const Text('Maximize'),
               ),
             ),
             ListTile(
               title: Text(
-                  'Minimizable ${state?.isMinimized == true ? '(minimized)' : ''}'),
+                'Minimizable ${(state?.isMinimized ?? false) ? '(minimized)' : ''}',
+              ),
               subtitle: Text('${state?.isMinimizable}'),
               trailing: ElevatedButton(
                 onPressed:
-                    state?.isMinimizable == true ? window.minimize : null,
+                    (state?.isMinimizable ?? false) ? window.minimize : null,
                 child: const Text('Minimize'),
               ),
             ),
@@ -158,7 +159,8 @@ class StateView extends StatelessWidget {
               title: const Text('Restorable'),
               subtitle: Text('${state?.isRestorable}'),
               trailing: ElevatedButton(
-                onPressed: state?.isRestorable == true ? window.restore : null,
+                onPressed:
+                    (state?.isRestorable ?? false) ? window.restore : null,
                 child: const Text('Restore'),
               ),
             ),
@@ -235,7 +237,7 @@ class _ColorSelectorState extends State<ColorSelector> {
 
   @override
   Widget build(BuildContext context) {
-    _color ??= Theme.of(context).colorScheme.background;
+    _color ??= Theme.of(context).colorScheme.surface;
     return Column(
       children: [
         const Spacer(),

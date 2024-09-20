@@ -17,6 +17,7 @@ class YaruWindow {
   /// context.
   static YaruWindowInstance of(BuildContext context) {
     const id = 0; // View.of(context).windowId;
+    // ignore: avoid_redundant_argument_values
     return _instance(id);
   }
 
@@ -129,7 +130,7 @@ class YaruWindow {
   /// Ensures that the window is initialized and returns the primary instance.
   static Future<YaruWindowInstance> ensureInitialized() async {
     WidgetsFlutterBinding.ensureInitialized();
-    final window = YaruWindow._instance(0);
+    final window = YaruWindow._instance();
     await window.init();
     return window;
   }

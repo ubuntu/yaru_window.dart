@@ -9,3 +9,4 @@ coverage/
 pubspec.lock
 pubspec_overrides.yaml
 .flutter-plugins*
+**/.fvm

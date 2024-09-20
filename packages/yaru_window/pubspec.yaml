@@ -1,9 +1,8 @@
-name: yaru_window_manager
-description: |
-  A window_manager -based implementation of yaru_window for macOS and Windows.
+name: yaru_window
+description: Provides API for interacting with top-level windows.
 repository: https://github.com/ubuntu/yaru_window.dart
 issue_tracker: https://github.com/ubuntu/yaru_window.dart/issues
-version: 0.1.2
+version: 0.2.1
 
 environment:
   sdk: ">=3.1.0 <4.0.0"
@@ -12,22 +11,26 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_web_plugins:
-    sdk: flutter
-  window_manager: ^0.4.2
+  yaru_window_linux: ^0.2.0
+  yaru_window_manager: ^0.1.2
   yaru_window_platform_interface: ^0.1.2
+  yaru_window_web: ^0.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.4
+  plugin_platform_interface: ^2.1.8
   ubuntu_lints: ^0.4.0
 
 flutter:
   plugin:
-    implements: yaru_window
     platforms:
+      linux:
+        default_package: yaru_window_linux
       macos:
-        dartPluginClass: YaruWindowManager
+        default_package: yaru_window_manager
+      web:
+        default_package: yaru_window_web
       windows:
-        dartPluginClass: YaruWindowManager
+        default_package: yaru_window_manager

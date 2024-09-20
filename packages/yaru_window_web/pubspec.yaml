@@ -5,18 +5,18 @@ issue_tracker: https://github.com/ubuntu/yaru_window.dart/issues
 version: 0.0.3
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
-  flutter: '>=3.10.0'
+  sdk: ">=3.1.0 <4.0.0"
+  flutter: ">=3.24.3"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-  yaru_window_platform_interface: ^0.1.1
+  yaru_window_platform_interface: ^0.1.2
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
+  ubuntu_lints: ^0.4.0
 
 flutter:
   plugin:

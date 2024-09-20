@@ -245,12 +245,16 @@ void main() {
     var wasCalled = 0;
     await instance.onClose(0, () => ++wasCalled > 1);
 
-    expect(await WidgetsBinding.instance.handleRequestAppExit(),
-        AppExitResponse.cancel);
+    expect(
+      await WidgetsBinding.instance.handleRequestAppExit(),
+      AppExitResponse.cancel,
+    );
     expect(wasCalled, 1);
 
-    expect(await WidgetsBinding.instance.handleRequestAppExit(),
-        AppExitResponse.exit);
+    expect(
+      await WidgetsBinding.instance.handleRequestAppExit(),
+      AppExitResponse.exit,
+    );
     expect(wasCalled, 2);
   });
 }
