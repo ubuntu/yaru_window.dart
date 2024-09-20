@@ -1,3 +1,8 @@
+## 0.2.1
+
+ - **FIX**(linux): wire up YaruWindow.onClose with didRequestAppExit() (#35).
+ - **FEAT**: always call gtk_window_set_title in yaru_window_set_title.
+
 ## 0.1.3
 
 - Remove `delete-event` handler in favor of `didRequestAppExit()` (#35)
