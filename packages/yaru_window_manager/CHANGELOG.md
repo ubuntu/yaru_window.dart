@@ -1,3 +1,8 @@
+## 0.1.2+1
+
+ - **FIX**: `_handleClose` conditioned to the state stream (#31).
+ - **FIX**(yaru_window_manager): remove linux from the list of platforms (#24).
+
 ## 0.1.2
 
 - fix: `_handleClose` conditioned to the state stream (#31)

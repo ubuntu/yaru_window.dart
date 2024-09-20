@@ -1,3 +1,7 @@
+## 0.1.2+1
+
+ - **FIX**(linux): wire up YaruWindow.onClose with didRequestAppExit() (#35).
+
 ## 0.1.2
 
 - Wire up YaruWindow.onClose with didRequestAppExit() (#35)
