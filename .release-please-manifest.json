@@ -3,5 +3,6 @@
   "packages/yaru_window_linux": "0.2.0",
   "packages/yaru_window_manager": "0.1.2",
   "packages/yaru_window_platform_interface": "0.1.2",
-  "packages/yaru_window_web": "0.0.3"
+  "packages/yaru_window_web": "0.0.3",
+  ".": "1.0.0"
 }
