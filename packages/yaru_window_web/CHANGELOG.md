@@ -1,3 +1,7 @@
+## 0.0.3+1
+
+ - Update a dependency to the latest release.
+
 ## 0.0.3
 
 - Migrate to Flutter 3.10 and Dart 3.0.
