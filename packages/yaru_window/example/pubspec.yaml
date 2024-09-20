@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   handy_window: ^0.4.0
   yaru: ^5.2.0
-  yaru_window: ^0.2.1
+  yaru_window: ^0.2.1+1
 
 dev_dependencies:
   flutter_test:
