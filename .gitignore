@@ -10,3 +10,6 @@ pubspec.lock
 pubspec_overrides.yaml
 .flutter-plugins*
 **/.fvm
+
+# FVM Version Cache
+.fvm/
