@@ -1,3 +1,3 @@
-library yaru_window_web;
+library;
 
 export 'src/web_window.dart';

@@ -258,7 +258,7 @@ class _ColorSelectorState extends State<ColorSelector> {
             ColorPickerType.wheel: true,
           },
           onColorChanged: (color) {
-            setState(() => _color = color.withOpacity(_color!.opacity));
+            setState(() => _color = color.withValues(alpha: _color!.a));
             YaruWindow.of(context).setBackground(_color!);
           },
         ),
@@ -271,9 +271,9 @@ class _ColorSelectorState extends State<ColorSelector> {
           ),
         ),
         Slider(
-          value: _color!.opacity,
+          value: _color!.a,
           onChanged: (value) {
-            setState(() => _color = _color!.withOpacity(value));
+            setState(() => _color = _color!.withValues(alpha: value));
             YaruWindow.of(context).setBackground(_color!);
           },
         ),
