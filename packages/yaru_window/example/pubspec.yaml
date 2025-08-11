@@ -3,14 +3,14 @@ publish_to: 'none'
 
 environment:
   sdk: ">=3.1.0 <4.0.0"
-  flutter: ">=3.24.3"
+  flutter: ">=3.32.8"
 
 dependencies:
-  flex_color_picker: ^3.5.1
+  flex_color_picker: ^3.7.1
   flutter:
     sdk: flutter
   handy_window: ^0.4.0
-  yaru: ^5.2.0
+  yaru: ^8.1.0
   yaru_window:
     path: ../
 
