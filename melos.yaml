@@ -27,7 +27,11 @@ scripts:
   # cleanup generated files from coverage
   coverage:cleanup: >
     melos exec --file-exists=coverage/lcov.info -- \
-      lcov --remove coverage/lcov.info '**/*.g.dart' -o coverage/lcov.info
+      lcov --remove coverage/lcov.info \
+        '**/*.g.dart' \
+        --ignore-errors unused \
+        -o coverage/lcov.info
+
 
   # format all packages
   format:exclude: >
