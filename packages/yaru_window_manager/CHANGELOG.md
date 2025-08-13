@@ -1,3 +1,7 @@
+## 0.1.3
+
+ - update Flutter to 3.32.0 and window_manager to 0.5.1
+
 ## 0.1.2+1
 
  - **FIX**: `_handleClose` conditioned to the state stream (#31).

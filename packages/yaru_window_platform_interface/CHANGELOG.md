@@ -1,3 +1,7 @@
+## 0.1.3
+
+ - **CHORE**: update Flutter to 3.32.0
+
 ## 0.1.2+1
 
  - **FIX**(linux): wire up YaruWindow.onClose with didRequestAppExit() (#35).

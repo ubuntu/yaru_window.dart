@@ -1,3 +1,7 @@
+## 0.0.4
+
+ - **CHORE**: update FLutter to 3.32.0
+
 ## 0.0.3+1
 
  - Update a dependency to the latest release.

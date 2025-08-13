@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-08-13
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`yaru_window` - `v0.2.2`](#yaru_window---v022)
+ - [`yaru_window_linux` - `v0.2.2`](#yaru_window_linux---v022)
+ - [`yaru_window_manager` - `v0.1.3`](#yaru_window_manager---v013)
+ - [`yaru_window_platform_interface` - `v0.1.3`](#yaru_window_platform_interface---v013)
+ - [`yaru_window_web` - `v0.0.4`](#yaru_window_web---v004)
+
+---
+
+#### `yaru_window` - `v0.2.2`
+
+ - **CHORE**: update Flutter to 3.32.0
+
+#### `yaru_window_linux` - `v0.2.2`
+
+ - **CHORE**: update Flutter to 3.32.0
+
+#### `yaru_window_manager` - `v0.1.3`
+
+ - update Flutter to 3.32.0 and window_manager to 0.5.1
+
+#### `yaru_window_platform_interface` - `v0.1.3`
+
+ - **CHORE**: update Flutter to 3.32.0
+
+#### `yaru_window_web` - `v0.0.4`
+
+ - **CHORE**: update FLutter to 3.32.0
+
+
 ## 2024-09-20
 
 ### Changes
