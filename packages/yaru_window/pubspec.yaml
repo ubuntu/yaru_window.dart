@@ -6,7 +6,7 @@ version: 0.2.1+1
 
 environment:
   sdk: ">=3.1.0 <4.0.0"
-  flutter: ">=3.24.3"
+  flutter: ">=3.32.0"
 
 dependencies:
   flutter:
@@ -21,7 +21,7 @@ dev_dependencies:
     sdk: flutter
   mocktail: ^1.0.4
   plugin_platform_interface: ^2.1.8
-  ubuntu_lints: ^0.4.0
+  ubuntu_lints: ^0.4.1+1
 
 flutter:
   plugin:

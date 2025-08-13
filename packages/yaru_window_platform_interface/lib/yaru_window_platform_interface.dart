@@ -1,4 +1,4 @@
-library yaru_window_platform_interface;
+library;
 
 export 'src/platform_interface.dart';
 export 'src/state.dart';
